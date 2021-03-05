@@ -5,11 +5,7 @@ from time import sleep
 import arrow
 import requests
 from requests.auth import HTTPBasicAuth
-
-GITHUB_LOGIN = ""
-GITHUB_TOKEN = ""
-ORG_NAME = ""
-REPOSITORY_NAME = ""
+from settings import GITHUB_LOGIN, GITHUB_TOKEN, REPOSITORY_NAME, ORG_NAME
 
 
 def extract_datetime_or_none(isoformat_str_date):
@@ -126,7 +122,8 @@ def fetch_prs_between(start_date, end_date):
 
         current_date = extract_datetime_or_none(page_prs_list[-1]["createdAt"])
 
-        prs_list += [pr for pr in page_prs_list if pr_was_created_between(pr, start_date, end_date)]
+        prs_list += [pr for pr in page_prs_list if pr_was_created_between(
+            pr, start_date, end_date)]
         # request debug logs
         # print(f"Has next page: {has_next_page}")
         # print(f"Current date: {current_date.isoformat()}")
@@ -211,7 +208,8 @@ def get_first_review(pr):
     pr_author_login = get_author_login(pr)
     reviews = get_reviews_from_pr(pr)
 
-    different_author_reviews = [r for r in reviews if pr_author_login != get_author_login(r)]
+    different_author_reviews = [
+        r for r in reviews if pr_author_login != get_author_login(r)]
 
     if not different_author_reviews:
         return
@@ -228,9 +226,11 @@ def hours_without_review(pr):
 
     first_review_date = arrow.now().shift(days=1000)
     if first_review:
-        first_review_date = extract_datetime_or_none(arrow.get(first_review["createdAt"]))
+        first_review_date = extract_datetime_or_none(
+            arrow.get(first_review["createdAt"]))
 
-    first_review_or_merge_date = min([merge_date, close_date, first_review_date])
+    first_review_or_merge_date = min(
+        [merge_date, close_date, first_review_date])
 
     review_timedelta = first_review_or_merge_date - open_date
 
@@ -253,7 +253,8 @@ def hours_without_merge(pr):
 
 
 def filter_valid_prs(prs_list, include_hotfixes=True):
-    valid_prs_list = exclude_merge_backs_from_prod(exclude_releases(exclude_closeds(prs_list)))
+    valid_prs_list = exclude_merge_backs_from_prod(
+        exclude_releases(exclude_closeds(prs_list)))
 
     if not include_hotfixes:
         valid_prs_list = exclude_hotfixes(valid_prs_list)
@@ -286,11 +287,14 @@ def calulate_prs_review_time_statistics(
     start_date, end_date, include_hotfixes=False, use_time_before_review=False
 ):
     prs_list = fetch_prs_between(start_date, end_date)
-    valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
-    prs_more_than_18h_without_review = filter_prs_with_more_than_18h_before_review(valid_prs_list)
+    valid_prs_list = filter_valid_prs(
+        prs_list, include_hotfixes=include_hotfixes)
+    prs_more_than_18h_without_review = filter_prs_with_more_than_18h_before_review(
+        valid_prs_list)
     valid_prs_list_with_hours = format_prs_with_hours(valid_prs_list)
 
-    hours = sorted([pr["hours_without_review"] for pr in valid_prs_list_with_hours])
+    hours = sorted([pr["hours_without_review"]
+                    for pr in valid_prs_list_with_hours])
     percentile_95_idx = math.floor(0.95 * len(hours))
 
     print(f"Median: {statistics.median(hours)} hours")
