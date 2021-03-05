@@ -15,7 +15,7 @@ Coming soon
 1. Create a virtual enviroment `virtualenv venv`
 2. Install dependencies with `pip install -r requirements.txt`
 
-### Setup project variables
+### Project variables setup
 1. Create a .env file by copying from .env.example with `cp .env.example .env`
 2.  Fill settings variables:
 
