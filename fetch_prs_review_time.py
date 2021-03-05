@@ -5,13 +5,7 @@ from time import sleep
 import arrow
 import requests
 from requests.auth import HTTPBasicAuth
-from decouple import config
-
-# Settings
-GITHUB_LOGIN = config("GITHUB_LOGIN", default="")
-GITHUB_TOKEN = config("GITHUB_TOKEN", default="")
-ORG_NAME = config("ORG_NAME", default="")
-REPOSITORY_NAME = config("REPOSITORY_NAME", default="")
+from settings import GITHUB_LOGIN, GITHUB_TOKEN, REPOSITORY_NAME, ORG_NAME
 
 
 def extract_datetime_or_none(isoformat_str_date):
