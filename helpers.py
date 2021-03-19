@@ -1,3 +1,6 @@
+from common import extract_datetime_or_none, get_author_login, get_reviews_from_pr
+
+
 def is_closed(pr):
     return pr.get("closedAt") is not None and not pr.get("mergedAt")
 
@@ -57,3 +60,10 @@ def filter_valid_prs(prs_list, include_hotfixes=True):
         valid_prs_list = exclude_hotfixes(valid_prs_list)
 
     return valid_prs_list
+
+
+def format_timedelta(timedelta):
+    days = timedelta.days
+    hours, remainder = divmod(timedelta.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f'Days: {days} Hours: {hours} Minutes {minutes}'

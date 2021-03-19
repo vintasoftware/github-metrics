@@ -47,7 +47,8 @@ def hours_without_review(pr):
             arrow.get(first_review["createdAt"])
         )
 
-    first_review_or_merge_date = min([merge_date, close_date, first_review_date])
+    first_review_or_merge_date = min(
+        [merge_date, close_date, first_review_date])
 
     review_timedelta = first_review_or_merge_date - open_date
 
@@ -60,7 +61,8 @@ def hours_without_review(pr):
 def hours_without_merge(pr):
     open_date = extract_datetime_or_none(pr.get("createdAt"))
     merge_date = extract_datetime_or_none(pr.get("mergedAt"))
-
+    import ipdb
+    ipdb.set_trace()
     review_timedelta = merge_date - open_date
 
     if review_timedelta.days > 500:
@@ -100,13 +102,15 @@ def calulate_prs_review_time_statistics(
     start_date, end_date, include_hotfixes=False, use_time_before_review=False
 ):
     prs_list = fetch_prs_between(start_date, end_date)
-    valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
+    valid_prs_list = filter_valid_prs(
+        prs_list, include_hotfixes=include_hotfixes)
     prs_more_than_18h_without_review = filter_prs_with_more_than_18h_before_review(
         valid_prs_list
     )
     valid_prs_list_with_hours = format_prs_with_hours(valid_prs_list)
 
-    hours = sorted([pr["hours_without_review"] for pr in valid_prs_list_with_hours])
+    hours = sorted([pr["hours_without_review"]
+                   for pr in valid_prs_list_with_hours])
     percentile_95_idx = math.floor(0.95 * len(hours))
 
     print(f"Median: {statistics.median(hours)} hours")

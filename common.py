@@ -19,3 +19,16 @@ def get_author_login(pr_or_review):
         return
 
     return author.get("login")
+
+
+def get_reviews_from_pr(pr):
+    reviews_root = pr.get("reviews")
+
+    if not reviews_root:
+        return []
+
+    reviews = reviews_root.get("nodes", [])
+    if not reviews:
+        return []
+
+    return reviews
