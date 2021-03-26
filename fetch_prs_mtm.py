@@ -56,6 +56,7 @@ def call_mean_time_to_merge_statistics(
     start_date, end_date, include_hotfixes=False, use_time_before_review=False
 ):
     prs_list = fetch_prs_between(start_date, end_date)
+
     valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
 
     formatted_prs_list = format_prs_list(valid_prs_list)
@@ -80,8 +81,8 @@ def call_mean_time_to_merge_statistics(
 
 print(
     call_mean_time_to_merge_statistics(
-        start_date=arrow.get("2021-03-10"),
-        end_date=arrow.get("2021-03-12"),
+        start_date=arrow.get("2021-03-25"),
+        end_date=arrow.get("2021-03-26"),
         include_hotfixes=False,
     )
 )
