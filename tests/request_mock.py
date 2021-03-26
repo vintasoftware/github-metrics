@@ -292,4 +292,36 @@ prs_list_mock = [
             ]
         },
     },
+    {
+        "id": "00000000000000000000000",
+        "title": "New functionality",
+        "createdAt": "2021-03-25T10:19:45Z",
+        "baseRefName": "master",
+        "headRefName": "feat/adds-new-page",
+        "reviews": {
+            "nodes": [
+                {
+                    "createdAt": "2021-03-26T17:55:59Z",
+                    "state": "APPROVED",
+                    "author": {"login": "mariah_carey"},
+                }
+            ]
+        },
+        "author": {"login": "britney_spears"},
+        "mergedAt": None,
+        "closedAt": "2021-03-26T18:02:10Z",
+        "commits": {
+            "edges": [
+                {
+                    "node": {
+                        "commit": {
+                            "oid": "0000000000000000000000000000",
+                            "message": "Adds frontend tests",
+                            "committedDate": "2021-03-25T17:50:36Z",
+                        }
+                    }
+                },
+            ]
+        },
+    },
 ]
