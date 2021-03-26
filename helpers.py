@@ -66,4 +66,4 @@ def format_timedelta(timedelta):
     days = timedelta.days
     hours, remainder = divmod(timedelta.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
-    return f'{days} days {hours} hours {minutes} minutes'
+    return f"{days} days {hours} hours {minutes} minutes"
