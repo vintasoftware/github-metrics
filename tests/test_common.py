@@ -7,7 +7,19 @@ from common import extract_datetime_or_none, get_author_login, get_reviews_from_
 
 class TestCommon(unittest.TestCase):
     def setUp(self):
-        self.pr = prs_list_mock[0]
+        self.pr = prs_list_mock[1]
+        self.empty_pr = {
+            "id": "",
+            "title": "",
+            "createdAt": "",
+            "baseRefName": "master",
+            "headRefName": "",
+            "reviews": {},
+            "author": None,
+            "mergedAt": None,
+            "closedAt": None,
+            "commits": {},
+        }
 
     def test_extract_datetime_successfully(self):
         isoformat_str_date = self.pr.get("createdAt")
@@ -24,21 +36,17 @@ class TestCommon(unittest.TestCase):
         self.assertEqual(author, self.pr.get("author").get("login"))
 
     def test_fails_getting_author_login(self):
-        authorless_pr = {
-            "id": "",
-            "title": "",
-            "createdAt": "",
-            "baseRefName": "master",
-            "headRefName": "",
-            "reviews": {},
-            "author": None,
-            "mergedAt": None,
-            "closedAt": None,
-            "commits": {},
-        }
-        author = get_author_login(authorless_pr)
+        author = get_author_login(self.empty_pr)
 
         self.assertEqual(author, None)
+
+    def test_get_reviews_from_pr_successfully(self):
+        reviews = get_reviews_from_pr(self.pr)
+        self.assertEqual(self.pr.get("reviews").get("nodes"), reviews)
+
+    def test_pr_without_review(self):
+        reviews = get_reviews_from_pr(self.empty_pr)
+        self.assertEqual(reviews, [])
 
 
 if __name__ == "__main__":
