@@ -13,7 +13,7 @@ def extract_datetime_or_none(isoformat_str_date):
 def get_author_login(pr_or_review):
     author = pr_or_review.get("author")
     if not author:
-        return
+        return None
 
     return author.get("login")
 
