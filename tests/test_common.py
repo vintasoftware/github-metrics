@@ -1,18 +1,18 @@
 import unittest
 from datetime import timedelta
 
-from tests.request_mock import prs_list_mock
+from tests.mocks import request_mock
 from common import extract_datetime_or_none, get_author_login, get_reviews_from_pr
 
 
 class TestCommon(unittest.TestCase):
     def setUp(self):
-        self.pr = prs_list_mock[1]
+        self.pr = request_mock[1]
         self.empty_pr = {
             "id": "",
             "title": "",
             "createdAt": "",
-            "baseRefName": "master",
+            "baseRefName": "",
             "headRefName": "",
             "reviews": {},
             "author": None,

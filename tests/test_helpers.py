@@ -1,13 +1,13 @@
 import unittest
 from datetime import timedelta
 
-from tests.request_mock import prs_list_mock
+from tests.mocks import request_mock
 from helpers import filter_valid_prs, format_timedelta
 
 
 class TestHelpers(unittest.TestCase):
     def test_filter_valid_prs_successfully(self):
-        valid_prs_list = filter_valid_prs(prs_list_mock)
+        valid_prs_list = filter_valid_prs(request_mock)
         self.assertEqual(len(valid_prs_list), 1)
 
     def test_format_time_string(self):

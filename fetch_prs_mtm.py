@@ -25,7 +25,7 @@ def get_formatted_list_of_commits(commit_data):
     return commits_list
 
 
-def format_prs_list(prs_list, use_time_before_review=False):
+def format_prs_list(prs_list):
     return [
         {
             "title": pr["title"],
