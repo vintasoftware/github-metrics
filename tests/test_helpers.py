@@ -3,7 +3,7 @@ from tests.request_mock import prs_list_mock
 from helpers import filter_valid_prs
 
 
-class TestFetchPrsMTM(unittest.TestCase):
+class TestHelpers(unittest.TestCase):
     def setUp(self):
         self.prs_list = prs_list_mock
 
