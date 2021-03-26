@@ -63,6 +63,9 @@ def filter_valid_prs(prs_list, include_hotfixes=True):
 
 
 def format_timedelta(timedelta):
+    if timedelta.total_seconds() < 0:
+        return "Invalid timeframe"
+
     days = timedelta.days
     hours, remainder = divmod(timedelta.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
