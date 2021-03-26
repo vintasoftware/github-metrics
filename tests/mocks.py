@@ -1,4 +1,4 @@
-prs_list_mock = [
+request_mock = [
     {
         "id": "00000000000000000000000",
         "title": "Adds new page",
