@@ -44,8 +44,8 @@ def hours_without_review(pr):
     return time_without_review.total_seconds() / 3600
 
 
-def filter_prs_with_more_than_18h_before_review(prs_list, use_time_before_review=False):
-    return [pr for pr in prs_list if hours_without_review(pr) > 18]
+def filter_prs_with_more_than_24h_before_review(prs_list, use_time_before_review=False):
+    return [pr for pr in prs_list if hours_without_review(pr) > 24]
 
 
 def format_prs_list(prs_list):
@@ -53,12 +53,12 @@ def format_prs_list(prs_list):
         {
             "title": pr["title"],
             "author": get_author_login(pr),
+            "created_at": extract_datetime_or_none(pr.get("createdAt")),
             "first_review_at": extract_datetime_or_none(
                 get_first_review(pr).get("createdAt")
             )
             if get_first_review(pr)
             else None,
-            "created_at": extract_datetime_or_none(pr.get("createdAt")),
         }
         for pr in prs_list
     ]
@@ -75,10 +75,9 @@ def calulate_prs_review_time_statistics(start_date, end_date, include_hotfixes=F
     valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
     formatted_prs_list = format_prs_list(valid_prs_list)
     reviewed_prs = filter_reviewed_prs(formatted_prs_list)
-    prs_more_than_18h_without_review = filter_prs_with_more_than_18h_before_review(
+    prs_more_than_24h_without_review = filter_prs_with_more_than_24h_before_review(
         formatted_prs_list
     )
-
     review_time_list = []
     for pr in reviewed_prs:
         review_time = pr["first_review_at"] - pr["created_at"]
@@ -90,7 +89,7 @@ def calulate_prs_review_time_statistics(start_date, end_date, include_hotfixes=F
             ----------------------------------
             Total valid PRs: {len(formatted_prs_list)}
             PRs without review: {len(formatted_prs_list) - len(reviewed_prs)} ({(len(formatted_prs_list) - len(reviewed_prs)) * 100 / len(formatted_prs_list)}%)
-            PRs with more than 18h without review: {len(prs_more_than_18h_without_review)} ({len(prs_more_than_18h_without_review) * 100 / len(formatted_prs_list)}%)
+            PRs with more than 24h without review: {len(prs_more_than_24h_without_review)} ({len(prs_more_than_24h_without_review) * 100 / len(formatted_prs_list)}%)
             ----------------------------------
             Mean: {format_timedelta(numpy.mean(review_time_list))}
             Median: {format_timedelta(numpy.median(review_time_list))}
