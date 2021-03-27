@@ -3,7 +3,7 @@ import datetime
 
 from fetch_prs_mtr import (
     filter_reviewed_prs,
-    filter_prs_with_more_than_18h_before_review,
+    filter_prs_with_more_than_24h_before_review,
 )
 
 
@@ -32,7 +32,7 @@ class TestPRsMTR(unittest.TestCase):
             },
         ]
 
-        prs_list = filter_prs_with_more_than_18h_before_review(prs_list)
+        prs_list = filter_prs_with_more_than_24h_before_review(prs_list)
         self.assertEqual(len(prs_list), 2)
 
 

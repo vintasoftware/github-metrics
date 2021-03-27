@@ -8,7 +8,9 @@ def is_closed(pr):
 def is_release(pr):
     release_in_head_branch_name = "release" in pr["headRefName"].lower()
     release_in_title = "release" in pr["title"].lower()
-    head_branch_is_master = "master" or "main" in pr["headRefName"].lower()
+    head_branch_is_master = (
+        "master" in pr["headRefName"].lower() or "main" in pr["headRefName"].lower()
+    )
     base_branch_is_production = "production" in pr["baseRefName"].lower()
 
     if not base_branch_is_production:
@@ -29,9 +31,10 @@ def is_hotfix(pr):
 
 
 def is_merge_back_from_prod(pr):
-    base_branch_is_master = "master" or "main" in pr["baseRefName"].lower()
+    base_branch_is_master = (
+        "master" in pr["baseRefName"].lower() or "main" in pr["baseRefName"].lower()
+    )
     head_branch_is_production = "production" in pr["headRefName"].lower()
-
     return base_branch_is_master and head_branch_is_production
 
 
