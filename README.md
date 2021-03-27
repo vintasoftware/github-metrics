@@ -12,7 +12,7 @@ The run command takes 3 arguments. In order they are:
 
 `start date`: The metric start date. Date in format YYYY-mm-dd
 
-`end date`: The metric cutoff date. Date in format YYYY-mm-dd
+`end date`: The metric cutoff date. Be aware that this date will not included in the range calculation. Date in format YYYY-mm-dd
 
 #### Mean Time to Merge
 `python run.py mtm 2021-03-22 2021-03-24`
