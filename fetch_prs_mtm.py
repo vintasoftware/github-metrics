@@ -51,13 +51,11 @@ def get_merged_prs(formatted_prs_list):
 
 def call_mean_time_to_merge_statistics(start_date, end_date, include_hotfixes=False):
     prs_list = fetch_prs_between(start_date, end_date)
-
     valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
-
     formatted_prs_list = format_prs_list(valid_prs_list)
     merged_prs = get_merged_prs(formatted_prs_list)
 
-    if not merged_prs:
+    if not merged_prs or merged_prs == []:
         return "There are no valid PRs to pull this data from, please select another timeframe"
 
     time_to_merge_list = []
