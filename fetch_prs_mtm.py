@@ -52,9 +52,7 @@ def get_merged_prs(formatted_prs_list):
     return merged_prs
 
 
-def call_mean_time_to_merge_statistics(
-    start_date, end_date, include_hotfixes=False, use_time_before_review=False
-):
+def call_mean_time_to_merge_statistics(start_date, end_date, include_hotfixes=False):
     prs_list = fetch_prs_between(start_date, end_date)
 
     valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
@@ -77,12 +75,3 @@ def call_mean_time_to_merge_statistics(
             Median: {format_timedelta(numpy.median(time_to_merge_list))}\n
             95 percentile: {format_timedelta(numpy.percentile(time_to_merge_list, 95))}
             """
-
-
-print(
-    call_mean_time_to_merge_statistics(
-        start_date=arrow.get("2021-03-25"),
-        end_date=arrow.get("2021-03-26"),
-        include_hotfixes=False,
-    )
-)

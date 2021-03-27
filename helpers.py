@@ -51,7 +51,7 @@ def exclude_merge_backs_from_prod(prs_list):
     return [pr for pr in prs_list if not is_merge_back_from_prod(pr)]
 
 
-def filter_valid_prs(prs_list, include_hotfixes=True):
+def filter_valid_prs(prs_list, include_hotfixes=False):
     valid_prs_list = exclude_closeds(prs_list)
     valid_prs_list = exclude_releases(valid_prs_list)
     valid_prs_list = exclude_merge_backs_from_prod(valid_prs_list)
