@@ -115,6 +115,47 @@ request_mock = [
     },
     {
         "id": "00000000000000000000000",
+        "title": "New footer",
+        "createdAt": "2021-03-25T15:09:22Z",
+        "baseRefName": "master",
+        "headRefName": "feat/new-footer",
+        "reviews": {
+            "nodes": [
+                {
+                    "createdAt": "2021-03-26T09:55:20Z",
+                    "state": "APPROVED",
+                    "author": {"login": "britney_spears"},
+                }
+            ]
+        },
+        "author": {"login": "mariah_carey"},
+        "mergedAt": "2021-03-26T09:58:24Z",
+        "closedAt": "2021-03-26T09:58:26Z",
+        "commits": {
+            "edges": [
+                {
+                    "node": {
+                        "commit": {
+                            "oid": "0000000000000000000000000000",
+                            "message": "Creates base",
+                            "committedDate": "2021-03-24T17:06:18Z",
+                        }
+                    }
+                },
+                {
+                    "node": {
+                        "commit": {
+                            "oid": "0000000000000000000000000000",
+                            "message": "Adds animation",
+                            "committedDate": "2021-03-25T21:04:15Z",
+                        }
+                    }
+                },
+            ]
+        },
+    },
+    {
+        "id": "00000000000000000000000",
         "title": "Production",
         "createdAt": "2021-03-25T12:03:56Z",
         "baseRefName": "master",

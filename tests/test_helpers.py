@@ -8,7 +8,7 @@ from helpers import filter_valid_prs, format_timedelta
 class TestHelpers(unittest.TestCase):
     def test_filter_valid_prs_successfully(self):
         valid_prs_list = filter_valid_prs(request_mock)
-        self.assertEqual(len(valid_prs_list), 1)
+        self.assertEqual(len(valid_prs_list), 4)
 
     def test_format_time_string(self):
         time = timedelta(seconds=1 * 24 * 60 * 60 + 48035)
