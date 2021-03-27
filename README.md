@@ -22,8 +22,10 @@ The run command takes 3 arguments:
 
 ## Metrics available
 ### Mean Time to Merge (mtm)
-The **Time to Merge** metric calculates time between the first commit of a given branch, and the merge action of it's pull request. This metric calulates the mean of the branches created during a given period.
+The Time to Merge metric calculates time between the first commit of a given branch, and the merge action of it's pull request.
 
+### Mean Time to Review (mtm)
+It calculates the time a PR waited for, or has been waiting for the first review since the PR opened.
 
 ## Project setup
 
