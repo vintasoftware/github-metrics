@@ -53,6 +53,9 @@ def get_merged_prs(formatted_prs_list):
 
 
 def call_mean_time_to_merge_statistics(start_date, end_date, include_hotfixes=False):
+    import ipdb
+
+    ipdb.set_trace()
     prs_list = fetch_prs_between(start_date, end_date)
 
     valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
@@ -69,9 +72,11 @@ def call_mean_time_to_merge_statistics(start_date, end_date, include_hotfixes=Fa
         merged_timedelta = pr["merged_at"] - first_commit_time
         time_to_merge_list.append(merged_timedelta)
 
-    return f"""
+    print(
+        f"""
             Total PRs calculated: {len(merged_prs)}\n
             Mean: {format_timedelta(numpy.mean(time_to_merge_list))}\n
             Median: {format_timedelta(numpy.median(time_to_merge_list))}\n
             95 percentile: {format_timedelta(numpy.percentile(time_to_merge_list, 95))}
             """
+    )

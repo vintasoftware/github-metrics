@@ -4,10 +4,26 @@
 
 A script for getting your team PRs metrics.
 
-This project was conceived to be part of the 2021 VBP.
+## Running
 
-### Metrics available
-Coming soon
+The run command takes 3 arguments:
+
+`metric`: The abbreviation of the metric you'd like to calculate
+
+`start date`: The metric start date. Date in format YYYY-mm-dd
+
+`end date`: The metric cutoff date. Date in format YYYY-mm-dd
+
+#### Mean Time to Merge
+`python run.py mtm 2021-03-22 2021-03-24`
+
+#### Mean time to Review
+`python run.py mtr 2020-11-10 2020-11-18`
+
+## Metrics available
+### Mean Time to Merge (mtm)
+The **Time to Merge** metric calculates time between the first commit of a given branch, and the merge action of it's pull request. This metric calulates the mean of the branches created during a given period.
+
 
 ## Project setup
 
