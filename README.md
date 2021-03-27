@@ -6,7 +6,7 @@ A script for getting your team PRs metrics.
 
 ## Running
 
-The run command takes 3 arguments:
+The run command takes 3 arguments. In order they are:
 
 `metric`: The abbreviation of the metric you'd like to calculate
 
