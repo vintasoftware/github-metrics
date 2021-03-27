@@ -1,6 +1,3 @@
-import math
-import statistics
-import arrow
 import numpy
 
 from common import extract_datetime_or_none, get_author_login
@@ -53,9 +50,6 @@ def get_merged_prs(formatted_prs_list):
 
 
 def call_mean_time_to_merge_statistics(start_date, end_date, include_hotfixes=False):
-    import ipdb
-
-    ipdb.set_trace()
     prs_list = fetch_prs_between(start_date, end_date)
 
     valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
