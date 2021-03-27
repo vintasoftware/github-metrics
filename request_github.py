@@ -68,7 +68,6 @@ def format_request_for_github(cursor=None):
 
 def pr_was_created_between(pr, start_date, end_date):
     open_date = extract_datetime_or_none(pr.get("createdAt"))
-
     return open_date >= start_date and open_date <= end_date
 
 
@@ -118,16 +117,11 @@ def fetch_prs_between(start_date, end_date):
             continue
 
         current_date = extract_datetime_or_none(page_prs_list[-1]["createdAt"])
-
         prs_list += [
             pr
             for pr in page_prs_list
             if pr_was_created_between(pr, start_date, end_date)
         ]
-        # request debug logs
-        # print(f"Has next page: {has_next_page}")
-        # print(f"Current date: {current_date.isoformat()}")
-        # print(f"current_date > start_date: {current_date > start_date}")
         sleep(1)
 
     return prs_list
