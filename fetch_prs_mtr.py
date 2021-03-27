@@ -78,21 +78,30 @@ def calulate_prs_review_time_statistics(start_date, end_date, include_hotfixes=F
     prs_more_than_24h_without_review = filter_prs_with_more_than_24h_before_review(
         formatted_prs_list
     )
+
     review_time_list = []
     for pr in reviewed_prs:
         review_time = pr["first_review_at"] - pr["created_at"]
         review_time_list.append(review_time)
+
+    total_prs = len(formatted_prs_list)
+    unreviewed_prs = total_prs - len(reviewed_prs)
+    prs_over_24h = len(prs_more_than_24h_without_review)
+
+    mean = numpy.mean(review_time_list)
+    median = numpy.median(review_time_list)
+    percentile = numpy.percentile(review_time_list, 95)
 
     print(
         f"""
             \033[1mMean time to review\033[0m
             ----------------------------------
             Total valid PRs: {len(formatted_prs_list)}
-            PRs without review: {len(formatted_prs_list) - len(reviewed_prs)} ({(len(formatted_prs_list) - len(reviewed_prs)) * 100 / len(formatted_prs_list)}%)
-            PRs with more than 24h without review: {len(prs_more_than_24h_without_review)} ({len(prs_more_than_24h_without_review) * 100 / len(formatted_prs_list)}%)
+            Unreviewed PRs: {unreviewed_prs} ({round((unreviewed_prs * 100) / total_prs, 2)}%)
+            PRs with more than 24h waiting for review: {prs_over_24h} ({round(prs_over_24h * 100 / total_prs, 2)}%)
             ----------------------------------
-            Mean: {format_timedelta(numpy.mean(review_time_list))}
-            Median: {format_timedelta(numpy.median(review_time_list))}
-            95 percentile: {format_timedelta(numpy.percentile(review_time_list, 95))}
+            Mean: {format_timedelta(mean)} ({round(mean.total_seconds()/3600, 2)} hours)
+            Median: {format_timedelta(median)} ({round(median.total_seconds()/3600, 2)} hours)
+            95 percentile: {format_timedelta(percentile)} ({round(percentile.total_seconds()/3600, 2)} hours)
         """
     )

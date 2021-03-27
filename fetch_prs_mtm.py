@@ -64,11 +64,18 @@ def call_mean_time_to_merge_statistics(start_date, end_date, include_hotfixes=Fa
         merged_timedelta = pr["merged_at"] - first_commit_time
         time_to_merge_list.append(merged_timedelta)
 
+    mean = numpy.mean(time_to_merge_list)
+    median = numpy.median(time_to_merge_list)
+    percentile = numpy.percentile(time_to_merge_list, 95)
+
     print(
         f"""
-            Total PRs calculated: {len(merged_prs)}\n
-            Mean: {format_timedelta(numpy.mean(time_to_merge_list))}\n
-            Median: {format_timedelta(numpy.median(time_to_merge_list))}\n
-            95 percentile: {format_timedelta(numpy.percentile(time_to_merge_list, 95))}
+            \033[1mMean time to merge\033[0m
+            ----------------------------------
+            Total PRs calculated: {len(merged_prs)}
+            ----------------------------------
+            Mean: {format_timedelta(mean)} ({round(mean.total_seconds()/3600, 2)} hours)
+            Median: {format_timedelta(median)} ({round(median.total_seconds()/3600, 2)} hours)
+            95 percentile: {format_timedelta(percentile)} ({round(percentile.total_seconds()/3600, 2)} hours)
             """
     )
