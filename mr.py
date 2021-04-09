@@ -1,5 +1,3 @@
-import numpy
-
 from common import extract_datetime_or_none, get_author_login
 from helpers import filter_valid_prs, format_timedelta
 from request_github import fetch_prs_between
@@ -61,24 +59,21 @@ def call_merge_rate_statistics(
         prs_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
     )
     formatted_prs_list = format_prs_list(valid_prs_list)
-    merged_prs = get_merged_prs(formatted_prs_list)
+    merged_prs = len(get_merged_prs(formatted_prs_list))
     if not merged_prs or merged_prs == []:
         return "There are no valid PRs to pull this data from, please select another timeframe"
 
-    prs_authors = get_prs_authors(formatted_prs_list)
+    prs_authors = len(get_prs_authors(formatted_prs_list))
 
-    mean = len(merged_prs) / len(prs_authors)
-    # median = numpy.median(time_to_merge_list)
-    # percentile = numpy.percentile(time_to_merge_list, 95)
+    merge_rate = merged_prs / prs_authors
 
-    # print(
-    #     f"""
-    #         \033[1mMean time to merge\033[0m
-    #         ----------------------------------
-    #         Total PRs calculated: {len(merged_prs)}
-    #         ----------------------------------
-    #         Mean: {format_timedelta(mean)} ({round(mean.total_seconds()/3600, 2)} hours)
-    #         Median: {format_timedelta(median)} ({round(median.total_seconds()/3600, 2)} hours)
-    #         95 percentile: {format_timedelta(percentile)} ({round(percentile.total_seconds()/3600, 2)} hours)
-    #         """
-    # )
+    print(
+        f"""
+            \033[1mMerge Rate\033[0m
+            ----------------------------------
+            Total PRs calculated: {merged_prs}
+            Total devs calculated: {prs_authors}
+            ----------------------------------
+            Merge Rate: {merge_rate}
+            """
+    )
