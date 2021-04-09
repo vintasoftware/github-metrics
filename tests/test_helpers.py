@@ -3,11 +3,11 @@ from datetime import timedelta
 
 from tests.mocks import request_mock
 from helpers import (
-    filter_valid_prs,
     format_timedelta,
     exclude_closeds,
     exclude_releases,
     exclude_merge_backs_from_prod,
+    exclude_authors,
 )
 
 
@@ -90,6 +90,37 @@ class TestHelpers(unittest.TestCase):
         formatted_time = format_timedelta(-time)
 
         self.assertEqual(formatted_time, "Invalid timeframe")
+
+    def test_exclude_authors_from_pr(self):
+        prs = [
+            {
+                "author": {"login": "ladygaga"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "beyonce"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "beyonce"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "grimes"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "badgalriri"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "katyperry"},
+                "headRefName": "production",
+            },
+        ]
+
+        valid_prs = exclude_authors(prs, authors=["beyonce", "katyperry"])
+        self.assertEqual(len(valid_prs), 3)
 
 
 if __name__ == "__main__":
