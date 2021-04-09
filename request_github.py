@@ -32,6 +32,8 @@ def format_request_for_github(cursor=None):
                     createdAt
                     baseRefName
                     headRefName
+                    additions
+                    deletions
                     reviews(first: 10) {{
                         nodes {{
                             createdAt
