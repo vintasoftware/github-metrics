@@ -21,10 +21,10 @@ The run command takes 3 arguments. In order they are:
 `python run.py ttr 2020-11-10 2020-11-18`
 
 ## Metrics available
-### Time To Merge (ttm)
+- **Time To Merge (ttm)**
 The Time to Merge metric calculates time between the first commit of a given branch, and the merge action of it's pull request.
 
-### Time To Review (ttr)
+- **Time To Review (ttr)**
 It calculates the time a PR waited for, or has been waiting for the first review since the PR opened.
 
 ## Project setup
