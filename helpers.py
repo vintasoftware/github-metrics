@@ -20,7 +20,9 @@ def is_release(pr):
 
 
 def is_hotfix(pr):
-    hotfix_in_head_branch_name = "hotfix/" or "hf/" in pr["headRefName"].lower()
+    hotfix_in_head_branch_name = (
+        "hotfix/" in pr["headRefName"].lower() or "hf/" in pr["headRefName"].lower()
+    )
     hotfix_in_title = "hotfix" in pr["title"].lower()
     base_branch_is_production = "production" in pr["baseRefName"].lower()
 

@@ -8,6 +8,7 @@ from helpers import (
     exclude_releases,
     exclude_merge_backs_from_prod,
     exclude_authors,
+    exclude_hotfixes,
 )
 
 
@@ -121,6 +122,27 @@ class TestHelpers(unittest.TestCase):
 
         valid_prs = exclude_authors(prs, authors=["beyonce", "katyperry"])
         self.assertEqual(len(valid_prs), 3)
+
+    def test_exclude_hotfixes(self):
+        prs = [
+            {
+                "baseRefName": "production",
+                "headRefName": "feature/new",
+                "title": "Open modal",
+            },
+            {
+                "baseRefName": "production",
+                "headRefName": "hf/page",
+                "title": "page",
+            },
+            {
+                "baseRefName": "master",
+                "headRefName": "feature/test-hotfix",
+                "title": "adds test",
+            },
+        ]
+        prs_list = exclude_hotfixes(prs)
+        self.assertEqual(len(prs_list), 2)
 
 
 if __name__ == "__main__":
