@@ -14,17 +14,17 @@ The run command takes 3 arguments. In order they are:
 
 `end date`: The metric cutoff date. Be aware that this date will not included in the range calculation. Date in format YYYY-mm-dd
 
-#### Mean Time to Merge
-`python run.py mtm 2021-03-22 2021-03-24`
+#### Time To Merge
+`python run.py ttm 2021-03-22 2021-03-24`
 
-#### Mean time to Review
-`python run.py mtr 2020-11-10 2020-11-18`
+#### Time to Review
+`python run.py ttr 2020-11-10 2020-11-18`
 
 ## Metrics available
-### Mean Time to Merge (mtm)
+### Time To Merge (ttm)
 The Time to Merge metric calculates time between the first commit of a given branch, and the merge action of it's pull request.
 
-### Mean Time to Review (mtr)
+### Time To Review (ttr)
 It calculates the time a PR waited for, or has been waiting for the first review since the PR opened.
 
 ## Project setup

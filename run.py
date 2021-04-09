@@ -10,9 +10,9 @@ def run():
     start_date = arrow.get(sys.argv[2])
     end_date = arrow.get(sys.argv[3])
 
-    if sys.argv[1] == "mtm":
+    if sys.argv[1] == "ttm":
         call_mean_time_to_merge_statistics(start_date, end_date)
-    elif sys.argv[1] == "mtr":
+    elif sys.argv[1] == "ttr":
         calulate_prs_review_time_statistics(start_date, end_date)
 
 
