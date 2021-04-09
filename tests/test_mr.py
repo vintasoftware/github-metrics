@@ -19,13 +19,13 @@ class TestPRsMTM(unittest.TestCase):
     def test_get_authors_list(self):
         prs = [
             {
-                "author": {"login": "ladygaga"},
+                "author": "ladygaga",
             },
             {
-                "author": {"login": "beyonce"},
+                "author": "beyonce",
             },
             {
-                "author": {"login": "badgalriri"},
+                "author": "badgalriri",
             },
         ]
 
