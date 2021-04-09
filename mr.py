@@ -1,5 +1,5 @@
 from common import extract_datetime_or_none, get_author_login
-from helpers import filter_valid_prs, format_timedelta
+from helpers import filter_valid_prs
 from request_github import fetch_prs_between
 
 
