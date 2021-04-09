@@ -1,7 +1,7 @@
 import unittest
 import datetime
 
-from fetch_prs_mtr import (
+from ttr import (
     filter_reviewed_prs,
     filter_prs_with_more_than_24h_before_review,
 )
