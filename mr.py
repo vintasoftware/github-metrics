@@ -3,36 +3,13 @@ from helpers import filter_valid_prs, format_timedelta
 from request_github import fetch_prs_between
 
 
-def get_formatted_list_of_commits(commit_data):
-    commits_list = []
-
-    if not commit_data.get("edges"):
-        return []
-
-    for data in commit_data.get("edges"):
-        commit = data.get("node").get("commit")
-        commits_list.append(
-            {
-                "message": commit.get("message"),
-                "commited_at": extract_datetime_or_none(commit.get("committedDate")),
-            }
-        )
-    return commits_list
-
-
 def format_prs_list(prs_list):
     return [
         {
-            "title": pr["title"],
             "author": get_author_login(pr),
-            "created_at": extract_datetime_or_none(pr.get("createdAt")),
             "merged_at": extract_datetime_or_none(pr.get("mergedAt"))
             if pr.get("mergedAt")
             else None,
-            "closed_at": extract_datetime_or_none(pr.get("closedAt"))
-            if pr.get("closedAt")
-            else None,
-            "commits": get_formatted_list_of_commits(pr.get("commits")),
         }
         for pr in prs_list
     ]
