@@ -20,10 +20,10 @@ def run():
         elif "end_date=" in arg:
             end_date = arg.split("end_date=")[1]
             end_date = arrow.get(end_date)
-        elif "--include-hotfixes" in arg:
+        elif "--include_hotfixes" in arg:
             include_hotfixes = True
-        elif "exclude=" in arg:
-            users = arg.split("exclude=")[1]
+        elif "exclude_author=" in arg:
+            users = arg.split("exclude_author=")[1]
             user_list = users.split(",")
 
     if metric == "ttm":

@@ -6,25 +6,29 @@ A script for getting your team PRs metrics.
 
 ## Running
 
-The run command takes 3 arguments. In order they are:
+The run command takes the following arguments:
 
 `metric`: The abbreviation of the metric you'd like to calculate
 
-`start date`: The metric start date. Date in format YYYY-mm-dd
+`start_date`: The metric start date. Date in format YYYY-mm-dd
 
-`end date`: The metric cutoff date. Be aware that this date will not included in the range calculation. Date in format YYYY-mm-dd
+`end_date`: The metric cutoff date. Be aware that this date will not included in the range calculation. Date in format YYYY-mm-dd
+
+`exclude_author`: Will exclude all PRs created by the listed authors. This argument must list usernames separated by a comma. Example: `exclude_author=pantoja,github_username,other_username`
+
+`--include_hotfixes`: Will include all hotfixes in the metric calculation. By default, this value is false.
 
 #### [Time To Merge](#ttm)
-`python run.py ttm 2021-03-22 2021-03-24`
+`python run.py metric=ttm start_date=2021-03-22 end_date=2021-03-24`
 
 #### [Time to Review](#ttr)
-`python run.py ttr 2020-11-10 2020-11-18`
+`python run.py metric=ttr start_date=2020-11-10 end_date=2020-11-18`
 
 #### [Merge Rate](#mr)
-`python run.py mr 2021-03-22 2021-03-24`
+`python run.py metric=mr start_date=2021-03-22 end_date=2021-03-24`
 
 #### [Pull Request Size](#pr-size)
-`python run.py pr_size 2020-11-10 2020-11-18`
+`python run.py metric=pr_size start_date=2020-11-10 end_date=2020-11-18`
 
 ## Metrics available
 - <b id="ttm">Time To Merge (ttm):</b>
