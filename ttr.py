@@ -74,7 +74,9 @@ def calulate_prs_review_time_statistics(
     start_date, end_date, include_hotfixes, exclude_authors
 ):
     prs_list = fetch_prs_between(start_date, end_date)
-    valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
+    valid_prs_list = filter_valid_prs(
+        prs_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
+    )
     formatted_prs_list = format_prs_list(valid_prs_list)
     reviewed_prs = filter_reviewed_prs(formatted_prs_list)
     prs_more_than_24h_without_review = filter_prs_with_more_than_24h_before_review(
