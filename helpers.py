@@ -56,7 +56,7 @@ def exclude_merge_backs_from_prod(prs_list):
     return [pr for pr in prs_list if not is_merge_back_from_prod(pr)]
 
 
-def exclude_authors(prs_list, authors):
+def exclude_authors_in_list(prs_list, authors):
     return [pr for pr in prs_list if not get_author_login(pr) in authors]
 
 
@@ -69,7 +69,7 @@ def filter_valid_prs(prs_list, include_hotfixes=False, exclude_authors=[]):
         valid_prs_list = exclude_hotfixes(valid_prs_list)
 
     if exclude_authors:
-        valid_prs_list = exclude_authors(valid_prs_list, exclude_authors)
+        valid_prs_list = exclude_authors_in_list(valid_prs_list, exclude_authors)
     return valid_prs_list
 
 

@@ -12,18 +12,18 @@ def run():
     user_list = []
     metric = ""
     for arg in sys.argv:
-        if "--metric=" in arg:
-            metric = arg.split("--metric=")[1]
-        elif "--start_date=" in arg:
-            start_date = arg.split("--start_date=")[1]
+        if "metric=" in arg:
+            metric = arg.split("metric=")[1]
+        elif "start_date=" in arg:
+            start_date = arg.split("start_date=")[1]
             start_date = arrow.get(start_date)
-        elif "--end_date=" in arg:
-            end_date = arg.split("--end_date=")[1]
+        elif "end_date=" in arg:
+            end_date = arg.split("end_date=")[1]
             end_date = arrow.get(end_date)
         elif "--include-hotfixes" in arg:
             include_hotfixes = True
-        elif "--exclude=" in arg:
-            users = arg.split("--exclude=")
+        elif "exclude=" in arg:
+            users = arg.split("exclude=")[1]
             user_list = users.split(",")
 
     if metric == "ttm":

@@ -7,7 +7,7 @@ from helpers import (
     exclude_closeds,
     exclude_releases,
     exclude_merge_backs_from_prod,
-    exclude_authors,
+    exclude_authors_in_list,
     exclude_hotfixes,
 )
 
@@ -120,7 +120,7 @@ class TestHelpers(unittest.TestCase):
             },
         ]
 
-        valid_prs = exclude_authors(prs, authors=["beyonce", "katyperry"])
+        valid_prs = exclude_authors_in_list(prs, authors=["beyonce", "katyperry"])
         self.assertEqual(len(valid_prs), 3)
 
     def test_exclude_hotfixes(self):
