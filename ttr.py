@@ -70,7 +70,9 @@ def filter_reviewed_prs(prs_list):
     return [pr for pr in prs_list if pr["first_review_at"] is not None]
 
 
-def calulate_prs_review_time_statistics(start_date, end_date, include_hotfixes=False):
+def calulate_prs_review_time_statistics(
+    start_date, end_date, include_hotfixes, exclude_authors
+):
     prs_list = fetch_prs_between(start_date, end_date)
     valid_prs_list = filter_valid_prs(prs_list, include_hotfixes=include_hotfixes)
     formatted_prs_list = format_prs_list(valid_prs_list)
