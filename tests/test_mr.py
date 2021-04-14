@@ -36,6 +36,9 @@ class TestPRsMTM(unittest.TestCase):
             {
                 "author": "badgalriri",
             },
+            {
+                "author": "badgalriri",
+            },
         ]
 
         prs_authors = get_prs_authors(prs)

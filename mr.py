@@ -24,8 +24,13 @@ def get_merged_prs(formatted_prs_list):
     return merged_prs
 
 
-def get_prs_authors(formatted_prs_list):
-    return [pr["author"] for pr in formatted_prs_list]
+def get_prs_authors(prs_list):
+    pr_author_list = []
+
+    for pr in prs_list:
+        if pr["author"] not in pr_author_list:
+            pr_author_list.append(pr["author"])
+    return pr_author_list
 
 
 def call_merge_rate_statistics(
@@ -36,20 +41,19 @@ def call_merge_rate_statistics(
         prs_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
     )
     formatted_prs_list = format_prs_list(valid_prs_list)
-    merged_prs = len(get_merged_prs(formatted_prs_list))
+    merged_prs = get_merged_prs(formatted_prs_list)
     if not merged_prs or merged_prs == []:
         return "There are no valid PRs to pull this data from, please select another timeframe"
 
-    prs_authors = len(get_prs_authors(formatted_prs_list))
-
-    merge_rate = merged_prs / prs_authors
+    prs_authors = get_prs_authors(merged_prs)
+    merge_rate = len(merged_prs) / len(prs_authors)
 
     print(
         f"""
             \033[1mMerge Rate\033[0m
             ----------------------------------
-            Total PRs calculated: {merged_prs}
-            Total devs calculated: {prs_authors}
+            Total PRs calculated: {len(merged_prs)}
+            Total devs calculated: {len(prs_authors)}
             ----------------------------------
             Merge Rate: {merge_rate}
             """
