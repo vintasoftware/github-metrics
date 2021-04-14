@@ -12,7 +12,7 @@ The run command takes the following arguments:
 
 `start_date`: The metric start date. Date in format YYYY-mm-dd
 
-`end_date`: The metric cutoff date. Be aware that this date will not included in the range calculation. Date in format YYYY-mm-dd
+`end_date`: The metric cutoff date. Date in format YYYY-mm-dd
 
 `exclude_author`: Will exclude all PRs created by the listed authors. This argument must list usernames separated by a comma. Example: `exclude_author=pantoja,github_username,other_username`
 

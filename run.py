@@ -19,7 +19,7 @@ def run():
             start_date = arrow.get(start_date)
         elif "end_date=" in arg:
             end_date = arg.split("end_date=")[1]
-            end_date = arrow.get(end_date)
+            end_date = arrow.get(f"{end_date}T23:59:59")
         elif "--include_hotfixes" in arg:
             include_hotfixes = True
         elif "exclude_author=" in arg:
