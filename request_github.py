@@ -6,10 +6,14 @@ from common import extract_datetime_or_none
 from settings import GITHUB_LOGIN, GITHUB_TOKEN, REPOSITORY_NAME, ORG_NAME
 
 
-def format_request_for_github(cursor=None):
+def format_request_for_github(cursor=None, label=None):
     after = ""
     if cursor:
         after = f', after: "{cursor}"'
+
+    label_filter = ''
+    if label:
+        label_filter = f', label: {label}'
 
     return """{{
     organization(login: "{ORG_NAME}") {{
@@ -19,7 +23,7 @@ def format_request_for_github(cursor=None):
                 orderBy: {{
                     field: CREATED_AT,
                     direction: DESC
-                }}{after}
+                }}{label_filter}{after}
             ) {{
                 pageInfo {{
                     endCursor
@@ -64,7 +68,7 @@ def format_request_for_github(cursor=None):
         }}
     }}
 }}""".format(
-        after=after, ORG_NAME=ORG_NAME, REPOSITORY_NAME=REPOSITORY_NAME
+        label_filter=label_filter, after=after, ORG_NAME=ORG_NAME, REPOSITORY_NAME=REPOSITORY_NAME
     )
 
 
@@ -73,7 +77,7 @@ def pr_was_created_between(pr, start_date, end_date):
     return open_date >= start_date and open_date <= end_date
 
 
-def fetch_prs_between(start_date, end_date):
+def fetch_prs_between(start_date, end_date, label=None):
     prs_list = []
     current_date = None
     cursor = None
@@ -82,7 +86,7 @@ def fetch_prs_between(start_date, end_date):
         response = requests.post(
             "https://api.github.com/graphql",
             auth=HTTPBasicAuth(GITHUB_LOGIN, GITHUB_TOKEN),
-            json={"query": format_request_for_github(cursor)},
+            json={"query": format_request_for_github(cursor, label)},
         )
         data = response.json().get("data")
 

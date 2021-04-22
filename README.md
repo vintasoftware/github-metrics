@@ -30,6 +30,9 @@ The run command takes the following arguments:
 #### [Pull Request Size](#pr-size)
 `github_metrics --metric=pr_size --start_date=2020-11-10 --end_date=2020-11-18`
 
+#### [Hotfixes count](#hotfixes-count)
+`python run.py metric=pr_size start_date=2020-11-10 end_date=2020-11-18`
+
 ## Metrics available
 - <b id="ttm">Time To Merge (ttm):</b>
 The Time to Merge metric calculates time between the first commit of a given branch, and the merge action of it's pull request.
@@ -42,6 +45,9 @@ It measures the total number of merged pull requests to the total number of deve
 
 - <b id="pr-size">Pull Request Size (pr_size):</b>
 It generates metrics related to the number of lines added and deleted in a PR. The output will generate metrics related to the sum of different lines in a pr (lines added + lines deleted), and the addition rate metric (lines addes / lines deleted). In the latter case, a higher the rate number means more lines are being added than deleted.
+
+- <b id="hotfixescount">Hotfixes count (hotfixes_count):</b>
+The number of hotfixes in the period.
 
 ## Project setup
 

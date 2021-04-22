@@ -5,6 +5,7 @@ from ttm import call_mean_time_to_merge_statistics
 from ttr import calulate_prs_review_time_statistics
 from mr import call_merge_rate_statistics
 from pr_size import call_pr_size_statistics
+from hotfixes_count import count_hotfixes
 
 
 @click.command()
@@ -60,3 +61,5 @@ def cli(metric, start_date, end_date, include_hotfixes, exclude_authors):
         call_merge_rate_statistics(start_date, end_date, include_hotfixes, user_list)
     elif metric == "pr_size":
         call_pr_size_statistics(start_date, end_date, include_hotfixes, user_list)
+    elif metric == "hotfixes_count":
+        count_hotfixes(start_date, end_date, user_list)
