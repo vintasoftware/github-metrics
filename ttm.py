@@ -74,7 +74,7 @@ def call_mean_time_to_merge_statistics(
 
     print(
         f"""
-            \033[1mMean time to merge\033[0m
+            \033[1mTime to merge\033[0m
             ----------------------------------
             Total PRs calculated: {len(merged_prs)}
             ----------------------------------

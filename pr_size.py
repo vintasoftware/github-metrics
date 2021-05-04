@@ -26,9 +26,10 @@ def call_pr_size_statistics(
 
     total_line_diff = []
     diff_line_rate = []
+
     for pr in formatted_prs_list:
         total_line_diff.append(pr["additions"] + pr["deletions"])
-        diff_line_rate.append(pr["additions"] / pr["deletions"])
+        diff_line_rate.append(pr["additions"] - pr["deletions"])
 
     total_mean = numpy.mean(total_line_diff)
     total_median = numpy.median(total_line_diff)

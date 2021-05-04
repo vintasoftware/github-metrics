@@ -98,7 +98,7 @@ def calulate_prs_review_time_statistics(
 
     print(
         f"""
-            \033[1mMean time to review\033[0m
+            \033[1mTime to review\033[0m
             ----------------------------------
             Total valid PRs: {len(formatted_prs_list)}
             Unreviewed PRs: {unreviewed_prs} ({round((unreviewed_prs * 100) / total_prs, 2)}%)
