@@ -1,44 +1,32 @@
 *.pyc
 .DS_Store
-.env
 __pycache__/
 /.vscode/
+.idea/
 
 # coverage result
 .coverage
 /coverage/
 
-# pycharm
-.idea/
-
 # data
 *.dump
 
-# npm
-node_modules/
-npm-debug.log
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-# Webpack
-/frontend/bundles/*
-/frontend/webpack_bundles/*
-/webpack-stats.json
-/jquery-webpack-stats.json
-
-# Sass
-.sass-cache
-*.map
-
-# General
-/vinta_analytics-venv/
-/venv/
-/env/
-/output/
-/cache/
-boilerplate.zip
-
-# Spritesmith
-spritesmith-generated/
-spritesmith.scss
-
-# templated email
-tmp_email/
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+eggs/
+.eggs/
+lib/
+lib64/
+*.egg-info/
+*.egg
