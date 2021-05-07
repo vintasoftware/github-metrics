@@ -59,4 +59,5 @@ It generates metrics related to the number of lines added and deleted in a PR. T
 
 `GITHUB_LOGIN`: Your github account login
 
-`GITHUB_TOKEN`: An access token generated with your github account.  More information accessible through [this guide](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
+`GITHUB_TOKEN`: An access token generated with your github account.  More information accessible through [this guide](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). The lib requires full repo access for it to work ![image](https://user-images.githubusercontent.com/38823219/117503308-27d1ab80-af57-11eb-845c-a8640cfe023d.png)
+
