@@ -48,7 +48,7 @@ def format_request_for_github(cursor=None):
                     }}
                     mergedAt
                     closedAt
-                    commits(first: 10) {{
+                    commits(first: 100) {{
                         edges {{
                             node {{
                                 commit {{
@@ -125,5 +125,4 @@ def fetch_prs_between(start_date, end_date):
             if pr_was_created_between(pr, start_date, end_date)
         ]
         sleep(1)
-
     return prs_list
