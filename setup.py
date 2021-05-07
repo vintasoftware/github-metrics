@@ -7,12 +7,12 @@ with open("requirements.txt") as requirements_file:
         requirements_file.readlines())]
 
 setup(
-    name="run",
+    name="github_metrics",
     version="0.1",
-    py_modules=["run"],
+    py_modules=["github_metrics"],
     install_requires=requirements,
     entry_points="""
         [console_scripts]
-        run=run:cli
+        github_metrics=github_metrics:cli
     """,
 )
