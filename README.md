@@ -14,7 +14,7 @@ The run command takes the following arguments:
 
 `--end-date`: The metric cutoff date. Date in format YYYY-mm-dd
 
-`--exclude-author`: Will exclude all PRs created by the listed authors. This argument must list usernames separated by a comma. Example: `--exclude_author=pantoja,github_username,other_username`
+`--exclude-authors`: Will exclude all PRs created by the listed authors. This argument must list usernames separated by a comma. Example: `--exclude_authors=pantoja,github_username,other_username`
 
 `--include-hotfixes`: Will include all hotfixes in the metric calculation. By default, this value is false.
 

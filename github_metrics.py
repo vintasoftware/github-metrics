@@ -28,7 +28,7 @@ from pr_size import call_pr_size_statistics
 )
 @click.option(
     "--include-hotfixes",
-    type=bool,
+    is_flag=True,
     default=False,
     help="Will include all hotfixes in the metric calculation.",
 )
