@@ -8,27 +8,27 @@ A script for getting your team PRs metrics.
 
 The run command takes the following arguments:
 
-`metric`: The abbreviation of the metric you'd like to calculate
+`--metric`: The reference for the metric you'd like to calculate
 
-`start_date`: The metric start date. Date in format YYYY-mm-dd
+`--start-date`: The metric start date. Date in format YYYY-mm-dd
 
-`end_date`: The metric cutoff date. Date in format YYYY-mm-dd
+`--end-date`: The metric cutoff date. Date in format YYYY-mm-dd
 
-`exclude_author`: Will exclude all PRs created by the listed authors. This argument must list usernames separated by a comma. Example: `exclude_author=pantoja,github_username,other_username`
+`--exclude-author`: Will exclude all PRs created by the listed authors. This argument must list usernames separated by a comma. Example: `--exclude_author=pantoja,github_username,other_username`
 
-`--include_hotfixes`: Will include all hotfixes in the metric calculation. By default, this value is false.
+`--include-hotfixes`: Will include all hotfixes in the metric calculation. By default, this value is false.
 
 #### [Time To Merge](#ttm)
-`python run.py metric=ttm start_date=2021-03-22 end_date=2021-03-24`
+`python run.py --metric=ttm --start_date=2021-03-22 --end_date=2021-03-24`
 
 #### [Time to Review](#ttr)
-`python run.py metric=ttr start_date=2020-11-10 end_date=2020-11-18`
+`python run.py --metric=ttr --start_date=2020-11-10 --end_date=2020-11-18`
 
 #### [Merge Rate](#mr)
-`python run.py metric=mr start_date=2021-03-22 end_date=2021-03-24`
+`python run.py --metric=mr --start_date=2021-03-22 --end_date=2021-03-24`
 
 #### [Pull Request Size](#pr-size)
-`python run.py metric=pr_size start_date=2020-11-10 end_date=2020-11-18`
+`python run.py --metric=pr_size --start_date=2020-11-10 --end_date=2020-11-18`
 
 ## Metrics available
 - <b id="ttm">Time To Merge (ttm):</b>
@@ -47,7 +47,7 @@ It generates metrics related to the number of lines added and deleted in a PR. T
 
 ### Dependencies setup
 1. Create a virtual enviroment `virtualenv venv`
-2. Install dependencies with `pip install -r requirements.txt`
+2. Install dependencies with `pip install --editable .`
 
 ### Project variables setup
 1. Create a .env file by copying from .env.example with `cp .env.example .env`
