@@ -28,7 +28,7 @@ from pr_size import call_pr_size_statistics
 )
 @click.option(
     "--include-hotfixes",
-    type=str,
+    type=bool,
     default=False,
     help="Will include all hotfixes in the metric calculation.",
 )
@@ -38,6 +38,9 @@ from pr_size import call_pr_size_statistics
     help="List of PR authors separated by a comma to be removed from metric",
 )
 def cli(metric, start_date, end_date, include_hotfixes, exclude_authors):
+    """
+    Generates metrics from Github API.
+    """
     start_date = arrow.get(start_date)
     end_date = arrow.get(f"{end_date}T23:59:59")
 
