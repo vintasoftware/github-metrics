@@ -31,7 +31,7 @@ The run command takes the following arguments:
 `github_metrics --metric=pr_size --start_date=2020-11-10 --end_date=2020-11-18`
 
 #### [Hotfixes count](#hotfixes-count)
-`python run.py metric=pr_size start_date=2020-11-10 end_date=2020-11-18`
+`python run.py metric=hotfixes_count start_date=2020-11-10 end_date=2020-11-18`
 
 ## Metrics available
 - <b id="ttm">Time To Merge (ttm):</b>
