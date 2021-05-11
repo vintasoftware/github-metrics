@@ -74,6 +74,11 @@ def pr_was_created_between(pr, start_date, end_date):
 
 
 def fetch_prs_between(start_date, end_date):
+    if not all([GITHUB_LOGIN, GITHUB_TOKEN, ORG_NAME, REPOSITORY_NAME]):
+        raise EnvironmentError(
+            "The environment is not properly configured. "
+            "Please check if you .env file is created and has the proper variables."
+        )
     prs_list = []
     current_date = None
     cursor = None
