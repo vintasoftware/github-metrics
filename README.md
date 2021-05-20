@@ -19,19 +19,19 @@ The run command takes the following arguments:
 `--include-hotfixes`: Will include all hotfixes in the metric calculation. By default, this value is false.
 
 #### [Time To Merge](#ttm)
-`github_metrics --metric=ttm --start_date=2021-03-22 --end_date=2021-03-24`
+`github_metrics --metric=ttm --start-date=2021-03-22 --end-date=2021-03-24`
 
 #### [Time to Review](#ttr)
-`github_metrics --metric=ttr --start_date=2020-11-10 --end_date=2020-11-18`
+`github_metrics --metric=ttr --start-date=2020-11-10 --end-date=2020-11-18`
 
 #### [Merge Rate](#mr)
-`github_metrics --metric=mr --start_date=2021-03-22 --end_date=2021-03-24`
+`github_metrics --metric=mr --start-date=2021-03-22 --end-date=2021-03-24`
 
 #### [Pull Request Size](#pr-size)
-`github_metrics --metric=pr_size --start_date=2020-11-10 --end_date=2020-11-18`
+`github_metrics --metric=pr_size --start-date=2020-11-10 --end-date=2020-11-18`
 
 #### [Hotfixes count](#hotfixes-count)
-`github_metrics --metric=hotfixes_count --start_date=2020-11-10 --end_date=2020-11-18`
+`github_metrics --metric=hotfixes_count --start-date=2020-11-10 --end-date=2020-11-18`
 
 ## Metrics available
 - <b id="ttm">Time To Merge (ttm):</b>
