@@ -43,7 +43,7 @@ The Time to Merge metric calculates time between the first commit of a given bra
 - <b id="ttr">Time To Review (ttr):</b>
 It calculates the time a PR waited for, or has been waiting for the first review since the PR opened.
 
-- <b id="ttr">Time To Open (tto):</b>
+- <b id="tto">Time To Open (tto):</b>
 The time elapsed between a user's first commit to a branch and opening a pull request for that branch.
 
 - <b id="mr">Merge Rate (mr):</b>
@@ -52,7 +52,7 @@ It measures the total number of merged pull requests to the total number of deve
 - <b id="pr-size">Pull Request Size (pr_size):</b>
 It generates metrics related to the number of lines added and deleted in a PR. The output will generate metrics related to the sum of different lines in a pr (lines added + lines deleted), and the addition rate metric (lines addes / lines deleted). In the latter case, a higher the rate number means more lines are being added than deleted.
 
-- <b id="hotfixescount">Hotfixes count (hotfixes_count):</b>
+- <b id="hotfixes-count">Hotfixes Count (hotfixes_count):</b>
 The number of hotfixes in the period.
 
 ## Project setup

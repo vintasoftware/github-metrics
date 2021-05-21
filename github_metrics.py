@@ -14,7 +14,16 @@ from hotfixes_count import count_hotfixes
     "--metric",
     type=str,
     required=True,
-    help="The reference of the metric you'd like to run",
+    help="""The reference of the metric you'd like to run:
+    
+    \b
+    ttm - Time to Merge
+    ttr - Time to Review
+    tto - Time to Open
+    mr - Merge Rate
+    pr_size - Pull Request Size
+    hotfixes_count - Hotfixes Count
+    \b""",
 )
 @click.option(
     "--start-date",
