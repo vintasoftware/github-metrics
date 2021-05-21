@@ -6,6 +6,10 @@ from common import extract_datetime_or_none
 from settings import GITHUB_LOGIN, GITHUB_TOKEN, REPOSITORY_NAME, ORG_NAME
 
 
+class ClientError(BaseException):
+    pass
+
+
 def format_request_for_github(cursor=None):
     after = ""
     if cursor:
@@ -89,6 +93,10 @@ def fetch_prs_between(start_date, end_date):
             auth=HTTPBasicAuth(GITHUB_LOGIN, GITHUB_TOKEN),
             json={"query": format_request_for_github(cursor)},
         )
+
+        if response.json().get("errors", False):
+            raise ClientError(response.json().get("errors"))
+
         data = response.json().get("data")
 
         if not data:
