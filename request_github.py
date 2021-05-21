@@ -16,7 +16,7 @@ def format_request_for_github(cursor=None):
         after = f', after: "{cursor}"'
 
     return """{{
-    organization() {{
+    organization(login: "{ORG_NAME}") {{
         repository(name: "{REPOSITORY_NAME}") {{
             pullRequests(
                 first: 100,
@@ -68,7 +68,7 @@ def format_request_for_github(cursor=None):
         }}
     }}
 }}""".format(
-        after=after, REPOSITORY_NAME=REPOSITORY_NAME
+        after=after, ORG_NAME=ORG_NAME, REPOSITORY_NAME=REPOSITORY_NAME
     )
 
 
