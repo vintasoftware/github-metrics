@@ -29,13 +29,17 @@ from hotfixes_count import count_hotfixes
     "--start-date",
     type=str,
     required=True,
-    help="The metric start date. Date in format YYYY-mm-dd",
+    help="""The metric start date.
+    
+    Date in format YYYY-mm-dd""",
 )
 @click.option(
     "--end-date",
     type=str,
     required=True,
-    help="The metric cutoff date. Date in format YYYY-mm-dd",
+    help="""The metric cutoff date.
+    
+    Date in format YYYY-mm-dd""",
 )
 @click.option(
     "--include-hotfixes",
@@ -46,7 +50,10 @@ from hotfixes_count import count_hotfixes
 @click.option(
     "--exclude-authors",
     type=str,
-    help="List of PR authors separated by a comma to be removed from metric",
+    help="""
+        List of PR authors separated by a comma to be removed from metric
+
+        eg.: username,other_username""",
 )
 def cli(metric, start_date, end_date, include_hotfixes, exclude_authors):
     """
