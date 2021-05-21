@@ -73,6 +73,17 @@ def filter_valid_prs(prs_list, include_hotfixes=False, exclude_authors=[]):
     return valid_prs_list
 
 
+def filter_hotfixes(prs_list, exclude_authors=[]):
+    valid_prs_list = exclude_closeds(prs_list)
+    valid_prs_list = exclude_releases(valid_prs_list)
+    valid_prs_list = exclude_merge_backs_from_prod(valid_prs_list)
+    valid_prs_list = [pr for pr in prs_list if is_hotfix(pr)]
+
+    if exclude_authors:
+        valid_prs_list = exclude_authors_in_list(valid_prs_list, exclude_authors)
+    return valid_prs_list
+
+
 def format_timedelta(timedelta):
     if timedelta.total_seconds() < 0:
         return "Invalid timeframe"
