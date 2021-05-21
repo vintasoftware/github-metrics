@@ -55,6 +55,9 @@ The number of hotfixes in the period.
 1. Create a virtual enviroment `virtualenv venv`
 2. Install dependencies with `pip install --editable .`
 
+### Setup with docker
+1. Run the command with `docker-compose run app {}`. e.g. `docker-compose run app github_metrics --metric=ttm --start-date=2021-03-22 --end-date=2021-03-24`
+
 ### Project variables setup
 1. Create a .env file by copying from .env.example with `cp .env.example .env`
 2.  Fill settings variables:
