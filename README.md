@@ -24,6 +24,9 @@ The run command takes the following arguments:
 #### [Time to Review](#ttr)
 `github_metrics --metric=ttr --start-date=2020-11-10 --end-date=2020-11-18`
 
+#### [Time to Review](#ttr)
+`github_metrics --metric=tto --start-date=2020-11-10 --end-date=2020-11-18`
+
 #### [Merge Rate](#mr)
 `github_metrics --metric=mr --start-date=2021-03-22 --end-date=2021-03-24`
 
@@ -39,6 +42,9 @@ The Time to Merge metric calculates time between the first commit of a given bra
 
 - <b id="ttr">Time To Review (ttr):</b>
 It calculates the time a PR waited for, or has been waiting for the first review since the PR opened.
+
+- <b id="ttr">Time To Open (tto):</b>
+The time elapsed between a user's first commit to a branch and opening a pull request for that branch.
 
 - <b id="mr">Merge Rate (mr):</b>
 It measures the total number of merged pull requests to the total number of developers active in this time period (number of merged PRS / dev). A value closer to 1 indicates that each developer is merging a PR. a higher number indicates more merged PRs than devs, and vice versa.
