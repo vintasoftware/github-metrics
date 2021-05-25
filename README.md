@@ -24,7 +24,7 @@ The run command takes the following arguments:
 #### [Time to Review](#ttr)
 `github_metrics --metric=ttr --start-date=2020-11-10 --end-date=2020-11-18`
 
-#### [Time to Review](#ttr)
+#### [Time to Open](#tto)
 `github_metrics --metric=tto --start-date=2020-11-10 --end-date=2020-11-18`
 
 #### [Merge Rate](#mr)
