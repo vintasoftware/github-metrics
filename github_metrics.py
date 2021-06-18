@@ -55,7 +55,15 @@ from hotfixes_count import count_hotfixes
 
         eg.: username,other_username""",
 )
-def cli(metric, start_date, end_date, include_hotfixes, exclude_authors):
+@click.option(
+    "--exclude-weekends",
+    is_flag=True,
+    default=False,
+    help="Will include all hotfixes in the metric calculation.",
+)
+def cli(
+    metric, start_date, end_date, include_hotfixes, exclude_authors, exclude_weekends
+):
     """
     Generates metrics from Github API.
     """
@@ -68,7 +76,7 @@ def cli(metric, start_date, end_date, include_hotfixes, exclude_authors):
 
     if metric == "ttm":
         call_mean_time_to_merge_statistics(
-            start_date, end_date, include_hotfixes, user_list
+            start_date, end_date, include_hotfixes, user_list, exclude_weekends
         )
     elif metric == "ttr":
         calulate_prs_review_time_statistics(
