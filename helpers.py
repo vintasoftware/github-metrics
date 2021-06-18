@@ -1,4 +1,5 @@
-from common import extract_datetime_or_none, get_author_login, get_reviews_from_pr
+from common import get_author_login
+import datetime
 
 
 def is_closed(pr):
@@ -92,3 +93,29 @@ def format_timedelta(timedelta):
     hours, remainder = divmod(timedelta.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     return f"{days} days {hours} hours {minutes} minutes"
+
+
+def get_weekend_count(start_at, end_at):
+    day_count = end_at.day - start_at.day
+    number_of_complete_weeks = day_count // 7
+    weekends = number_of_complete_weeks * 2
+
+    additional_days = day_count % 7
+
+    days_index = []
+    for i in range(0, additional_days):
+        day = start_at + datetime.timedelta(days=i)
+        days_index.append(day.weekday())
+
+    if 5 in days_index:
+        weekends += 1
+    if 6 in days_index:
+        weekends += 1
+
+    return weekends
+
+
+def get_time_without_weekend(start_at, end_at):
+    weekend_count = get_weekend_count(start_at, end_at)
+    timedelta = end_at - start_at
+    return timedelta - datetime.timedelta(days=weekend_count)
