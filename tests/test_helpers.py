@@ -73,8 +73,8 @@ class TestHelpers(unittest.TestCase):
                 "headRefName": "production",
             },
         ]
-        prs_list = exclude_merge_backs_from_prod(prs)
-        self.assertEqual(len(prs_list), 2)
+        pr_list = exclude_merge_backs_from_prod(prs)
+        self.assertEqual(len(pr_list), 2)
 
     def test_format_time_string(self):
         time = datetime.timedelta(seconds=1 * 24 * 60 * 60 + 48035)
@@ -141,8 +141,8 @@ class TestHelpers(unittest.TestCase):
                 "title": "adds test",
             },
         ]
-        prs_list = exclude_hotfixes(prs)
-        self.assertEqual(len(prs_list), 2)
+        pr_list = exclude_hotfixes(prs)
+        self.assertEqual(len(pr_list), 2)
 
 
 class TestWeekendTime(unittest.TestCase):

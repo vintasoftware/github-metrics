@@ -9,15 +9,15 @@ from github_metrics.metrics.ttr import (
 
 class TestPRsMTR(unittest.TestCase):
     def test_filter_reviewed_prs_successfully(self):
-        prs_list = [
+        pr_list = [
             {"first_review_at": None},
             {"first_review_at": datetime.datetime(2021, 3, 25, 14, 28, 52)},
         ]
-        reviewed_prs = filter_reviewed_prs(prs_list)
-        self.assertEqual(reviewed_prs, [prs_list[1]])
+        reviewed_prs = filter_reviewed_prs(pr_list)
+        self.assertEqual(reviewed_prs, [pr_list[1]])
 
     def test_filter_prs_with_more_than_18h_before_review(self):
-        prs_list = [
+        pr_list = [
             {
                 "created_at": datetime.datetime(2021, 3, 25, 14, 28, 52),
                 "first_review_at": None,
@@ -32,8 +32,8 @@ class TestPRsMTR(unittest.TestCase):
             },
         ]
 
-        prs_list = filter_prs_with_more_than_24h_before_review(prs_list)
-        self.assertEqual(len(prs_list), 2)
+        pr_list = filter_prs_with_more_than_24h_before_review(pr_list)
+        self.assertEqual(len(pr_list), 2)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,6 @@ from github_metrics.helpers import (
     format_timedelta,
     get_time_without_weekend,
 )
-from github_metrics.request_github import fetch_prs_between
 
 
 def get_formatted_list_of_commits(commit_data):
@@ -26,7 +25,7 @@ def get_formatted_list_of_commits(commit_data):
     return commits_list
 
 
-def format_prs_list(prs_list):
+def format_pr_list(pr_list):
     return [
         {
             "title": pr["title"],
@@ -40,32 +39,30 @@ def format_prs_list(prs_list):
             else None,
             "commits": get_formatted_list_of_commits(pr.get("commits")),
         }
-        for pr in prs_list
+        for pr in pr_list
     ]
 
 
-def get_merged_prs(formatted_prs_list):
+def get_merged_prs(formatted_pr_list):
     merged_prs = []
 
-    for pr in formatted_prs_list:
+    for pr in formatted_pr_list:
         if pr["merged_at"] is not None:
             merged_prs.append(pr)
     return merged_prs
 
 
 def call_mean_time_to_merge_statistics(
-    start_date,
-    end_date,
+    pr_list,
     include_hotfixes=False,
     exclude_authors=[],
     exclude_weekends=False,
 ):
-    prs_list = fetch_prs_between(start_date, end_date)
-    valid_prs_list = filter_valid_prs(
-        prs_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
+    valid_pr_list = filter_valid_prs(
+        pr_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
     )
-    formatted_prs_list = format_prs_list(valid_prs_list)
-    merged_prs = get_merged_prs(formatted_prs_list)
+    formatted_pr_list = format_pr_list(valid_pr_list)
+    merged_prs = get_merged_prs(formatted_pr_list)
 
     if not merged_prs or merged_prs == []:
         return "There are no valid PRs to pull this data from, please select another timeframe"

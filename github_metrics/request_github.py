@@ -88,7 +88,7 @@ def fetch_prs_between(start_date, end_date):
             "The environment is not properly configured. "
             "Please check if you .env file is created and has the proper variables."
         )
-    prs_list = []
+    pr_list = []
     current_date = None
     cursor = None
     has_next_page = True
@@ -131,16 +131,16 @@ def fetch_prs_between(start_date, end_date):
         has_next_page = page_info["hasNextPage"]
         cursor = page_info["endCursor"]
 
-        page_prs_list = prs.get("nodes")
-        if not page_prs_list:
+        page_pr_list = prs.get("nodes")
+        if not page_pr_list:
             has_next_page = False
             continue
 
-        current_date = extract_datetime_or_none(page_prs_list[-1]["createdAt"])
-        prs_list += [
+        current_date = extract_datetime_or_none(page_pr_list[-1]["createdAt"])
+        pr_list += [
             pr
-            for pr in page_prs_list
+            for pr in page_pr_list
             if pr_was_created_between(pr, start_date, end_date)
         ]
         sleep(1)
-    return prs_list
+    return pr_list

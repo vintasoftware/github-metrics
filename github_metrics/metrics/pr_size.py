@@ -1,32 +1,28 @@
 import numpy
 
 from github_metrics.helpers import filter_valid_prs
-from github_metrics.request_github import fetch_prs_between
 
 
-def format_prs_list(prs_list):
+def format_pr_list(pr_list):
     return [
         {
             "additions": pr["additions"],
             "deletions": pr["deletions"],
         }
-        for pr in prs_list
+        for pr in pr_list
     ]
 
 
-def call_pr_size_statistics(
-    start_date, end_date, include_hotfixes=False, exclude_authors=[]
-):
-    prs_list = fetch_prs_between(start_date, end_date)
-    valid_prs_list = filter_valid_prs(
-        prs_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
+def call_pr_size_statistics(pr_list, include_hotfixes=False, exclude_authors=[]):
+    valid_pr_list = filter_valid_prs(
+        pr_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
     )
-    formatted_prs_list = format_prs_list(valid_prs_list)
+    formatted_pr_list = format_pr_list(valid_pr_list)
 
     total_line_diff = []
     diff_line_rate = []
 
-    for pr in formatted_prs_list:
+    for pr in formatted_pr_list:
         total_line_diff.append(pr["additions"] + pr["deletions"])
         diff_line_rate.append(pr["additions"] - pr["deletions"])
 
@@ -42,7 +38,7 @@ def call_pr_size_statistics(
         f"""
             \033[1mPull Requests Size\033[0m
             ----------------------------------
-            Total PRs calculated: {len(formatted_prs_list)}
+            Total PRs calculated: {len(formatted_pr_list)}
             ----------------------------------
             Total Lines Mean: {round(total_mean, 2)} lines
             Total Lines Median: {round(total_median, 2)} lines

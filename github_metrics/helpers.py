@@ -41,48 +41,48 @@ def is_merge_back_from_prod(pr):
     return base_branch_is_master and head_branch_is_production
 
 
-def exclude_closeds(prs_list):
-    return [pr for pr in prs_list if not is_closed(pr)]
+def exclude_closeds(pr_list):
+    return [pr for pr in pr_list if not is_closed(pr)]
 
 
-def exclude_releases(prs_list):
-    return [pr for pr in prs_list if not is_release(pr)]
+def exclude_releases(pr_list):
+    return [pr for pr in pr_list if not is_release(pr)]
 
 
-def exclude_hotfixes(prs_list):
-    return [pr for pr in prs_list if not is_hotfix(pr)]
+def exclude_hotfixes(pr_list):
+    return [pr for pr in pr_list if not is_hotfix(pr)]
 
 
-def exclude_merge_backs_from_prod(prs_list):
-    return [pr for pr in prs_list if not is_merge_back_from_prod(pr)]
+def exclude_merge_backs_from_prod(pr_list):
+    return [pr for pr in pr_list if not is_merge_back_from_prod(pr)]
 
 
-def exclude_authors_in_list(prs_list, authors):
-    return [pr for pr in prs_list if not get_author_login(pr) in authors]
+def exclude_authors_in_list(pr_list, authors):
+    return [pr for pr in pr_list if not get_author_login(pr) in authors]
 
 
-def filter_valid_prs(prs_list, include_hotfixes=False, exclude_authors=[]):
-    valid_prs_list = exclude_closeds(prs_list)
-    valid_prs_list = exclude_releases(valid_prs_list)
-    valid_prs_list = exclude_merge_backs_from_prod(valid_prs_list)
+def filter_valid_prs(pr_list, include_hotfixes=False, exclude_authors=[]):
+    valid_pr_list = exclude_closeds(pr_list)
+    valid_pr_list = exclude_releases(valid_pr_list)
+    valid_pr_list = exclude_merge_backs_from_prod(valid_pr_list)
 
     if not include_hotfixes:
-        valid_prs_list = exclude_hotfixes(valid_prs_list)
+        valid_pr_list = exclude_hotfixes(valid_pr_list)
 
     if exclude_authors:
-        valid_prs_list = exclude_authors_in_list(valid_prs_list, exclude_authors)
-    return valid_prs_list
+        valid_pr_list = exclude_authors_in_list(valid_pr_list, exclude_authors)
+    return valid_pr_list
 
 
-def filter_hotfixes(prs_list, exclude_authors=[]):
-    valid_prs_list = exclude_closeds(prs_list)
-    valid_prs_list = exclude_releases(valid_prs_list)
-    valid_prs_list = exclude_merge_backs_from_prod(valid_prs_list)
-    valid_prs_list = [pr for pr in prs_list if is_hotfix(pr)]
+def filter_hotfixes(pr_list, exclude_authors=[]):
+    valid_pr_list = exclude_closeds(pr_list)
+    valid_pr_list = exclude_releases(valid_pr_list)
+    valid_pr_list = exclude_merge_backs_from_prod(valid_pr_list)
+    valid_pr_list = [pr for pr in pr_list if is_hotfix(pr)]
 
     if exclude_authors:
-        valid_prs_list = exclude_authors_in_list(valid_prs_list, exclude_authors)
-    return valid_prs_list
+        valid_pr_list = exclude_authors_in_list(valid_pr_list, exclude_authors)
+    return valid_pr_list
 
 
 def format_timedelta(timedelta):

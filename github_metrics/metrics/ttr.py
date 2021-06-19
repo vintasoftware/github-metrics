@@ -7,7 +7,6 @@ from github_metrics.helpers import (
     format_timedelta,
     get_time_without_weekend,
 )
-from github_metrics.request_github import fetch_prs_between
 
 
 def get_reviews_from_pr(pr):
@@ -48,12 +47,12 @@ def hours_without_review(pr):
     return time_without_review.total_seconds() / 3600
 
 
-def filter_prs_with_more_than_24h_before_review(prs_list, use_time_before_review=False):
-    return [pr for pr in prs_list if hours_without_review(pr) > 24]
+def filter_prs_with_more_than_24h_before_review(pr_list, use_time_before_review=False):
+    return [pr for pr in pr_list if hours_without_review(pr) > 24]
 
 
-def format_prs_list(prs_list):
-    prs_list_with_hours = [
+def format_pr_list(pr_list):
+    pr_list_with_hours = [
         {
             "title": pr["title"],
             "author": get_author_login(pr),
@@ -64,27 +63,26 @@ def format_prs_list(prs_list):
             if get_first_review(pr)
             else None,
         }
-        for pr in prs_list
+        for pr in pr_list
     ]
 
-    return prs_list_with_hours
+    return pr_list_with_hours
 
 
-def filter_reviewed_prs(prs_list):
-    return [pr for pr in prs_list if pr["first_review_at"] is not None]
+def filter_reviewed_prs(pr_list):
+    return [pr for pr in pr_list if pr["first_review_at"] is not None]
 
 
 def calulate_prs_review_time_statistics(
-    start_date, end_date, include_hotfixes, exclude_authors, exclude_weekends=False
+    pr_list, include_hotfixes, exclude_authors, exclude_weekends=False
 ):
-    prs_list = fetch_prs_between(start_date, end_date)
-    valid_prs_list = filter_valid_prs(
-        prs_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
+    valid_pr_list = filter_valid_prs(
+        pr_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
     )
-    formatted_prs_list = format_prs_list(valid_prs_list)
-    reviewed_prs = filter_reviewed_prs(formatted_prs_list)
+    formatted_pr_list = format_pr_list(valid_pr_list)
+    reviewed_prs = filter_reviewed_prs(formatted_pr_list)
     prs_more_than_24h_without_review = filter_prs_with_more_than_24h_before_review(
-        formatted_prs_list
+        formatted_pr_list
     )
 
     review_time_list = []
@@ -96,7 +94,7 @@ def calulate_prs_review_time_statistics(
             )
         review_time_list.append(review_time)
 
-    total_prs = len(formatted_prs_list)
+    total_prs = len(formatted_pr_list)
     unreviewed_prs = total_prs - len(reviewed_prs)
     prs_over_24h = len(prs_more_than_24h_without_review)
 
@@ -108,7 +106,7 @@ def calulate_prs_review_time_statistics(
         f"""
             \033[1mTime to review\033[0m
             ----------------------------------
-            Total valid PRs: {len(formatted_prs_list)}
+            Total valid PRs: {len(formatted_pr_list)}
             Unreviewed PRs: {unreviewed_prs} ({round((unreviewed_prs * 100) / total_prs, 2)}%)
             PRs with more than 24h waiting for review: {prs_over_24h} ({round(prs_over_24h * 100 / total_prs, 2)}%)
             ----------------------------------

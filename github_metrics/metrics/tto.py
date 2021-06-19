@@ -1,8 +1,11 @@
 import numpy
 
 from github_metrics.common import extract_datetime_or_none, get_author_login
-from github_metrics.helpers import filter_valid_prs, format_timedelta, get_time_without_weekend
-from github_metrics.request_github import fetch_prs_between
+from github_metrics.helpers import (
+    filter_valid_prs,
+    format_timedelta,
+    get_time_without_weekend,
+)
 
 
 def get_formatted_list_of_commits(commit_data):
@@ -22,7 +25,7 @@ def get_formatted_list_of_commits(commit_data):
     return commits_list
 
 
-def format_prs_list(prs_list):
+def format_pr_list(pr_list):
     return [
         {
             "title": pr["title"],
@@ -36,24 +39,23 @@ def format_prs_list(prs_list):
             else None,
             "commits": get_formatted_list_of_commits(pr.get("commits")),
         }
-        for pr in prs_list
+        for pr in pr_list
     ]
 
 
 def call_time_to_open_statistics(
-    start_date, end_date, include_hotfixes=False, exclude_authors=[], exclude_weekends=False
+    pr_list, include_hotfixes=False, exclude_authors=[], exclude_weekends=False
 ):
-    prs_list = fetch_prs_between(start_date, end_date)
-    valid_prs_list = filter_valid_prs(
-        prs_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
+    valid_pr_list = filter_valid_prs(
+        pr_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
     )
-    formatted_prs_list = format_prs_list(valid_prs_list)
+    formatted_pr_list = format_pr_list(valid_pr_list)
 
-    if not formatted_prs_list or formatted_prs_list == []:
+    if not formatted_pr_list or formatted_pr_list == []:
         return "There are no valid PRs to pull this data from, please select another timeframe"
 
     time_to_open = []
-    for pr in formatted_prs_list:
+    for pr in formatted_pr_list:
         first_commit_time = pr["commits"][0]["commited_at"]
         timedelta = pr["created_at"] - first_commit_time
         if exclude_weekends:
@@ -68,7 +70,7 @@ def call_time_to_open_statistics(
         f"""
             \033[1mTime to open\033[0m
             ----------------------------------
-            Total PRs calculated: {len(formatted_prs_list)}
+            Total PRs calculated: {len(formatted_pr_list)}
             ----------------------------------
             Mean: {format_timedelta(mean)} ({round(mean.total_seconds()/3600, 2)} hours)
             Median: {format_timedelta(median)} ({round(median.total_seconds()/3600, 2)} hours)

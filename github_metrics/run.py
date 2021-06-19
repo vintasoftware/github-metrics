@@ -8,6 +8,8 @@ from github_metrics.metrics.mr import call_merge_rate_statistics
 from github_metrics.metrics.pr_size import call_pr_size_statistics
 from github_metrics.metrics.hotfixes_count import count_hotfixes
 
+from github_metrics.request_github import fetch_prs_between
+
 
 @click.command()
 @click.option(
@@ -74,21 +76,22 @@ def cli(
     if exclude_authors:
         user_list = exclude_authors.split(",")
 
+    pr_list = fetch_prs_between(start_date, end_date)
     if metric == "ttm":
         call_mean_time_to_merge_statistics(
-            start_date, end_date, include_hotfixes, user_list, exclude_weekends
+            pr_list, include_hotfixes, user_list, exclude_weekends
         )
     elif metric == "ttr":
         calulate_prs_review_time_statistics(
-            start_date, end_date, include_hotfixes, user_list, exclude_weekends
+            pr_list, include_hotfixes, user_list, exclude_weekends
         )
     elif metric == "tto":
         call_time_to_open_statistics(
-            start_date, end_date, include_hotfixes, user_list, exclude_weekends
+            pr_list, include_hotfixes, user_list, exclude_weekends
         )
     elif metric == "mr":
-        call_merge_rate_statistics(start_date, end_date, include_hotfixes, user_list)
+        call_merge_rate_statistics(pr_list, include_hotfixes, user_list)
     elif metric == "pr_size":
-        call_pr_size_statistics(start_date, end_date, include_hotfixes, user_list)
+        call_pr_size_statistics(pr_list, include_hotfixes, user_list)
     elif metric == "hotfixes_count":
-        count_hotfixes(start_date, end_date, user_list)
+        count_hotfixes(pr_list, user_list)
