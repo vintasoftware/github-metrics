@@ -1,7 +1,6 @@
 import unittest
-from datetime import timedelta
+import datetime
 
-from tests.mocks import request_mock
 from helpers import (
     format_timedelta,
     exclude_closeds,
@@ -9,6 +8,7 @@ from helpers import (
     exclude_merge_backs_from_prod,
     exclude_authors_in_list,
     exclude_hotfixes,
+    get_weekend_count,
 )
 
 
@@ -77,7 +77,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(len(prs_list), 2)
 
     def test_format_time_string(self):
-        time = timedelta(seconds=1 * 24 * 60 * 60 + 48035)
+        time = datetime.timedelta(seconds=1 * 24 * 60 * 60 + 48035)
         formatted_time = format_timedelta(time)
 
         hours, remainder = divmod(time.seconds, 3600)
@@ -87,7 +87,7 @@ class TestHelpers(unittest.TestCase):
         )
 
     def test_negative_timedelta_format_time_returns_invalid(self):
-        time = timedelta(seconds=1 * 24 * 60 * 60 + 48035)
+        time = datetime.timedelta(seconds=1 * 24 * 60 * 60 + 48035)
         formatted_time = format_timedelta(-time)
 
         self.assertEqual(formatted_time, "Invalid timeframe")
@@ -143,6 +143,24 @@ class TestHelpers(unittest.TestCase):
         ]
         prs_list = exclude_hotfixes(prs)
         self.assertEqual(len(prs_list), 2)
+
+    def test_get_weekend_count_end_of_month_correctly(self):
+        start_at = datetime.datetime(2021, 5, 28, 14, 24)
+        end_at = datetime.datetime(2021, 6, 4, 9, 47)
+        weekend_count = get_weekend_count(start_at, end_at)
+        self.assertEqual(weekend_count, 2)
+
+    def test_get_weekend_count_several_weeks_correctly(self):
+        start_at = datetime.datetime(2021, 6, 1, 9, 35)
+        end_at = datetime.datetime(2021, 6, 15, 18, 42)
+        weekend_count = get_weekend_count(start_at, end_at)
+        self.assertEqual(weekend_count, 4)
+
+    def test_get_weekend_count_end_of_month_without_weekend_correctly(self):
+        start_at = datetime.datetime(2021, 5, 31, 14, 12)
+        end_at = datetime.datetime(2021, 6, 1, 9, 2)
+        weekend_count = get_weekend_count(start_at, end_at)
+        self.assertEqual(weekend_count, 0)
 
 
 if __name__ == "__main__":

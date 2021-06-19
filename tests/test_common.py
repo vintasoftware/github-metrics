@@ -1,5 +1,4 @@
 import unittest
-from datetime import timedelta
 
 from tests.mocks import request_mock
 from common import extract_datetime_or_none, get_author_login, get_reviews_from_pr
