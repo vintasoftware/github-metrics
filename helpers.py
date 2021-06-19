@@ -95,24 +95,30 @@ def format_timedelta(timedelta):
     return f"{days} days {hours} hours {minutes} minutes"
 
 
-def get_weekend_count(start_at, end_at):
+def get_weekend_time(start_at, end_at):
     day_count = end_at.date() - start_at.date()
-    days_index = []
-
+    weekends = datetime.timedelta()
     for i in range(0, day_count.days + 1):
         day = start_at + datetime.timedelta(days=i)
-        days_index.append(day.weekday())
 
-    weekends = 0
-    if 5 in days_index:
-        weekends += days_index.count(5)
-    if 6 in days_index:
-        weekends += days_index.count(6)
+        # 5 represents Saturday and 6 represents Sunday
+        if day.weekday() == 5 or day.weekday() == 6:
+            # In a time period, if it's starting a time count, count from the beginning until end of day
+            if i == 0:
+                weekends += (
+                    datetime.datetime(day.year, day.month, day.day, 23, 59, 59) - day
+                )
 
+            # If it's the end of a time period, count from start of day until the end time
+            elif i == day_count.days:
+                weekends += end_at - datetime.datetime(day.year, day.month, day.day)
+
+            else:
+                weekends += datetime.timedelta(days=1)
     return weekends
 
 
 def get_time_without_weekend(start_at, end_at):
-    weekend_count = get_weekend_count(start_at, end_at)
+    weekend_timedelta = get_weekend_time(start_at, end_at)
     timedelta = end_at - start_at
-    return timedelta - datetime.timedelta(days=weekend_count)
+    return timedelta - weekend_timedelta

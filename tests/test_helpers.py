@@ -8,7 +8,7 @@ from helpers import (
     exclude_merge_backs_from_prod,
     exclude_authors_in_list,
     exclude_hotfixes,
-    get_weekend_count,
+    get_weekend_time,
 )
 
 
@@ -144,23 +144,43 @@ class TestHelpers(unittest.TestCase):
         prs_list = exclude_hotfixes(prs)
         self.assertEqual(len(prs_list), 2)
 
-    def test_get_weekend_count_end_of_month_correctly(self):
+
+class TestWeekendTime(unittest.TestCase):
+    def test_get_weekend_time_between_months_correctly(self):
         start_at = datetime.datetime(2021, 5, 28, 14, 24)
         end_at = datetime.datetime(2021, 6, 4, 9, 47)
-        weekend_count = get_weekend_count(start_at, end_at)
-        self.assertEqual(weekend_count, 2)
+        weekend_time = get_weekend_time(start_at, end_at)
 
-    def test_get_weekend_count_several_weeks_correctly(self):
+        self.assertEqual(weekend_time, datetime.timedelta(days=2))
+
+    def test_get_weekend_time_of_pr_reviewed_through_weekend(self):
         start_at = datetime.datetime(2021, 6, 1, 9, 35)
         end_at = datetime.datetime(2021, 6, 15, 18, 42)
-        weekend_count = get_weekend_count(start_at, end_at)
-        self.assertEqual(weekend_count, 4)
+        weekend_count = get_weekend_time(start_at, end_at)
 
-    def test_get_weekend_count_end_of_month_without_weekend_correctly(self):
+        self.assertEqual(weekend_count, datetime.timedelta(days=4))
+
+    def test_get_weekend_time_of_pr_reviewed_through_weekdays(self):
         start_at = datetime.datetime(2021, 5, 31, 14, 12)
         end_at = datetime.datetime(2021, 6, 1, 9, 2)
-        weekend_count = get_weekend_count(start_at, end_at)
-        self.assertEqual(weekend_count, 0)
+        weekend_count = get_weekend_time(start_at, end_at)
+
+        self.assertEqual(weekend_count, datetime.timedelta(days=0))
+
+    def test_get_weekend_time_of_pr_reviewed_on_a_saturday(self):
+        start_at = datetime.datetime(2021, 4, 30, 14)
+        end_at = datetime.datetime(2021, 5, 1, 9)
+        weekend_count = get_weekend_time(start_at, end_at)
+        # 9 hours
+        self.assertEqual(weekend_count, datetime.timedelta(seconds=32400))
+
+    def test_get_weekend_time_of_pr_created_on_a_sunday(self):
+        start_at = datetime.datetime(2021, 6, 6, 9)
+        end_at = datetime.datetime(2021, 6, 8, 12)
+        weekend_count = get_weekend_time(start_at, end_at)
+        print(weekend_count)
+        # 15 hours
+        self.assertEqual(weekend_count, datetime.timedelta(seconds=53999))
 
 
 if __name__ == "__main__":
