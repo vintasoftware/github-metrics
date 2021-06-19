@@ -3,8 +3,10 @@ from unittest import mock
 import datetime
 
 from tests.mocks import request_mock
-from ttm import get_merged_prs, call_mean_time_to_merge_statistics
-from helpers import filter_valid_prs
+from github_metrics.metrics.ttm import (
+    get_merged_prs,
+    call_mean_time_to_merge_statistics,
+)
 
 
 class TestPRsMTM(unittest.TestCase):
@@ -16,7 +18,7 @@ class TestPRsMTM(unittest.TestCase):
         merged_prs_list = get_merged_prs(prs_list)
         self.assertEqual(merged_prs_list, [prs_list[1]])
 
-    @mock.patch("ttm.fetch_prs_between")
+    @mock.patch("github_metrics.metrics.ttm.fetch_prs_between")
     def test_no_prs_to_calculate_mtm(self, mock_fetch_prs_between):
         mock_fetch_prs_between.return_value = []
         message = call_mean_time_to_merge_statistics("2020", "2021")

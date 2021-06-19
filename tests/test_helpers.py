@@ -1,7 +1,7 @@
 import unittest
 import datetime
 
-from helpers import (
+from github_metrics.helpers import (
     format_timedelta,
     exclude_closeds,
     exclude_releases,
@@ -9,7 +9,6 @@ from helpers import (
     exclude_authors_in_list,
     exclude_hotfixes,
     get_weekend_time,
-    get_time_without_weekend,
 )
 
 

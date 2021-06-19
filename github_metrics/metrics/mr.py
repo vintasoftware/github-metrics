@@ -1,6 +1,6 @@
-from common import extract_datetime_or_none, get_author_login
-from helpers import filter_valid_prs
-from request_github import fetch_prs_between
+from github_metrics.common import extract_datetime_or_none, get_author_login
+from github_metrics.helpers import filter_valid_prs
+from github_metrics.request_github import fetch_prs_between
 
 
 def format_prs_list(prs_list):
