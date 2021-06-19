@@ -8,7 +8,7 @@ from github_metrics.metrics.mr import call_merge_rate_statistics
 from github_metrics.metrics.pr_size import call_pr_size_statistics
 from github_metrics.metrics.hotfixes_count import count_hotfixes
 
-from github_metrics.request_github import fetch_prs_between
+from github_metrics.request import fetch_prs_between
 
 
 @click.command()
