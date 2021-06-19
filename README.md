@@ -8,7 +8,7 @@ A script for getting your team PRs metrics.
 
 The run command takes the following arguments:
 
-`--metric`: The reference for the metric you'd like to calculate
+`--metric`: The reference for the metric you'd like to calculate. If no metric is provided, it will calculate all metrics available.
 
 `--start-date`: The metric start date. Date in format YYYY-mm-dd
 
@@ -19,6 +19,9 @@ The run command takes the following arguments:
 `--include-hotfixes`: Will include all hotfixes in the metric calculation. By default, this value is false.
 
 `--exclude-weekends`: Will exclude weekend time from time metrics (time to merge, time to open, time to review).
+
+#### [All]
+`github_metrics --start-date=2021-03-22 --end-date=2021-03-24`
 
 #### [Time To Merge](#ttm)
 `github_metrics --metric=ttm --start-date=2021-03-22 --end-date=2021-03-24`
