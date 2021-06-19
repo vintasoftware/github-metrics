@@ -54,7 +54,15 @@ from github_metrics.request import fetch_prs_between
     "--exclude-authors",
     type=str,
     help="""
-        List of PR authors separated by a comma to be removed from metric
+        List of PR authors separated by a comma to be removed from metric.
+
+        eg.: username,other_username""",
+)
+@click.option(
+    "--filter-authors",
+    type=str,
+    help="""
+        Will calculate prs created only by the authors listed in here.
 
         eg.: username,other_username""",
 )
@@ -65,7 +73,13 @@ from github_metrics.request import fetch_prs_between
     help="Will exclude weekends from time metric.",
 )
 def cli(
-    metric, start_date, end_date, include_hotfixes, exclude_authors, exclude_weekends
+    metric,
+    start_date,
+    end_date,
+    include_hotfixes,
+    exclude_authors,
+    filter_authors,
+    exclude_weekends,
 ):
     """
     Generates metrics from Github API.
@@ -73,28 +87,54 @@ def cli(
     start_date = arrow.get(start_date)
     end_date = arrow.get(f"{end_date}T23:59:59")
 
-    user_list = []
+    exclude_user_list = []
     if exclude_authors:
-        user_list = exclude_authors.split(",")
+        exclude_user_list = exclude_authors.split(",")
+
+    filter_user_list = []
+    if filter_authors:
+        filter_user_list = filter_authors.split(",")
 
     pr_list = fetch_prs_between(start_date, end_date)
     if metric == "ttm":
         call_mean_time_to_merge_statistics(
-            pr_list, include_hotfixes, user_list, exclude_weekends
+            pr_list,
+            include_hotfixes,
+            exclude_user_list,
+            filter_user_list,
+            exclude_weekends,
         )
     elif metric == "ttr":
         calulate_prs_review_time_statistics(
-            pr_list, include_hotfixes, user_list, exclude_weekends
+            pr_list,
+            include_hotfixes,
+            exclude_user_list,
+            filter_user_list,
+            exclude_weekends,
         )
     elif metric == "tto":
         call_time_to_open_statistics(
-            pr_list, include_hotfixes, user_list, exclude_weekends
+            pr_list,
+            include_hotfixes,
+            exclude_user_list,
+            filter_user_list,
+            exclude_weekends,
         )
     elif metric == "mr":
-        call_merge_rate_statistics(pr_list, include_hotfixes, user_list)
+        call_merge_rate_statistics(
+            pr_list, include_hotfixes, exclude_user_list, filter_user_list
+        )
     elif metric == "pr_size":
-        call_pr_size_statistics(pr_list, include_hotfixes, user_list)
+        call_pr_size_statistics(
+            pr_list, include_hotfixes, exclude_user_list, filter_user_list
+        )
     elif metric == "hotfixes_count":
-        count_hotfixes(pr_list, user_list)
+        count_hotfixes(pr_list, exclude_user_list, filter_user_list)
     else:
-        call_all_metrics(pr_list, include_hotfixes, user_list, exclude_weekends)
+        call_all_metrics(
+            pr_list,
+            include_hotfixes,
+            exclude_user_list,
+            filter_user_list,
+            exclude_weekends,
+        )

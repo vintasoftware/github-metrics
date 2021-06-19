@@ -7,6 +7,7 @@ from github_metrics.helpers import (
     exclude_releases,
     exclude_merge_backs_from_prod,
     exclude_authors_in_list,
+    filter_authors_in_list,
     exclude_hotfixes,
     get_weekend_time,
 )
@@ -120,8 +121,39 @@ class TestHelpers(unittest.TestCase):
             },
         ]
 
-        valid_prs = exclude_authors_in_list(prs, authors=["beyonce", "katyperry"])
-        self.assertEqual(len(valid_prs), 3)
+        valid_prs = exclude_authors_in_list(prs, authors=["grimes", "katyperry"])
+        self.assertEqual(len(valid_prs), 4)
+
+    def test_filter_authors_from_pr(self):
+        prs = [
+            {
+                "author": {"login": "ladygaga"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "beyonce"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "beyonce"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "grimes"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "badgalriri"},
+                "headRefName": "production",
+            },
+            {
+                "author": {"login": "katyperry"},
+                "headRefName": "production",
+            },
+        ]
+
+        valid_prs = filter_authors_in_list(prs, authors=["grimes", "katyperry"])
+        self.assertEqual(len(valid_prs), 2)
 
     def test_exclude_hotfixes(self):
         prs = [

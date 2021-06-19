@@ -61,6 +61,10 @@ def exclude_authors_in_list(pr_list, authors):
     return [pr for pr in pr_list if not get_author_login(pr) in authors]
 
 
+def filter_authors_in_list(pr_list, authors):
+    return [pr for pr in pr_list if get_author_login(pr) in authors]
+
+
 def filter_valid_prs(pr_list, include_hotfixes=False, exclude_authors=[]):
     valid_pr_list = exclude_closeds(pr_list)
     valid_pr_list = exclude_releases(valid_pr_list)
@@ -74,7 +78,7 @@ def filter_valid_prs(pr_list, include_hotfixes=False, exclude_authors=[]):
     return valid_pr_list
 
 
-def filter_hotfixes(pr_list, exclude_authors=[]):
+def filter_hotfixes(pr_list, exclude_authors, filter_authors):
     valid_pr_list = exclude_closeds(pr_list)
     valid_pr_list = exclude_releases(valid_pr_list)
     valid_pr_list = exclude_merge_backs_from_prod(valid_pr_list)
@@ -82,6 +86,9 @@ def filter_hotfixes(pr_list, exclude_authors=[]):
 
     if exclude_authors:
         valid_pr_list = exclude_authors_in_list(valid_pr_list, exclude_authors)
+    if filter_authors:
+        valid_pr_list = filter_authors_in_list(valid_pr_list, exclude_authors)
+
     return valid_pr_list
 
 
