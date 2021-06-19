@@ -2,8 +2,13 @@ import requests
 from requests.auth import HTTPBasicAuth
 from time import sleep
 
-from common import extract_datetime_or_none
-from settings import GITHUB_LOGIN, GITHUB_TOKEN, REPOSITORY_NAME, ORG_NAME
+from github_metrics.common import extract_datetime_or_none
+from github_metrics.settings import (
+    GITHUB_LOGIN,
+    GITHUB_TOKEN,
+    REPOSITORY_NAME,
+    ORG_NAME,
+)
 
 
 class ClientError(BaseException):

@@ -1,9 +1,13 @@
 import arrow
 import numpy
 
-from common import extract_datetime_or_none, get_author_login
-from helpers import filter_valid_prs, format_timedelta, get_time_without_weekend
-from request_github import fetch_prs_between
+from github_metrics.common import extract_datetime_or_none, get_author_login
+from github_metrics.helpers import (
+    filter_valid_prs,
+    format_timedelta,
+    get_time_without_weekend,
+)
+from github_metrics.request_github import fetch_prs_between
 
 
 def get_reviews_from_pr(pr):
