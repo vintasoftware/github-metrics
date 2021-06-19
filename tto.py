@@ -1,7 +1,7 @@
 import numpy
 
-from common import extract_datetime_or_none, get_author_login
-from helpers import filter_valid_prs, format_timedelta
+from common import extract_datetime_or_none, get_author_login, 
+from helpers import filter_valid_prs, format_timedelta, get_time_without_weekend
 from request_github import fetch_prs_between
 
 
@@ -41,7 +41,7 @@ def format_prs_list(prs_list):
 
 
 def call_time_to_open_statistics(
-    start_date, end_date, include_hotfixes=False, exclude_authors=[]
+    start_date, end_date, include_hotfixes=False, exclude_authors=[], exclude_weekends=False
 ):
     prs_list = fetch_prs_between(start_date, end_date)
     valid_prs_list = filter_valid_prs(
@@ -55,8 +55,10 @@ def call_time_to_open_statistics(
     time_to_open = []
     for pr in formatted_prs_list:
         first_commit_time = pr["commits"][0]["commited_at"]
-        opened_pr_timedelta = pr["created_at"] - first_commit_time
-        time_to_open.append(opened_pr_timedelta)
+        timedelta = pr["created_at"] - first_commit_time
+        if exclude_weekends:
+            timedelta = get_time_without_weekend(first_commit_time, pr["created_at"])
+        time_to_open.append(timedelta)
 
     mean = numpy.mean(time_to_open)
     median = numpy.median(time_to_open)

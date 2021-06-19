@@ -80,10 +80,12 @@ def cli(
         )
     elif metric == "ttr":
         calulate_prs_review_time_statistics(
-            start_date, end_date, include_hotfixes, user_list
+            start_date, end_date, include_hotfixes, user_list, exclude_weekends
         )
     elif metric == "tto":
-        call_time_to_open_statistics(start_date, end_date, include_hotfixes, user_list)
+        call_time_to_open_statistics(
+            start_date, end_date, include_hotfixes, user_list, exclude_weekends
+        )
     elif metric == "mr":
         call_merge_rate_statistics(start_date, end_date, include_hotfixes, user_list)
     elif metric == "pr_size":

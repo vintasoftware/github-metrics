@@ -2,7 +2,7 @@ import arrow
 import numpy
 
 from common import extract_datetime_or_none, get_author_login
-from helpers import filter_valid_prs, format_timedelta
+from helpers import filter_valid_prs, format_timedelta, get_time_without_weekend
 from request_github import fetch_prs_between
 
 
@@ -71,7 +71,7 @@ def filter_reviewed_prs(prs_list):
 
 
 def calulate_prs_review_time_statistics(
-    start_date, end_date, include_hotfixes, exclude_authors
+    start_date, end_date, include_hotfixes, exclude_authors, exclude_weekends=False
 ):
     prs_list = fetch_prs_between(start_date, end_date)
     valid_prs_list = filter_valid_prs(
@@ -86,6 +86,10 @@ def calulate_prs_review_time_statistics(
     review_time_list = []
     for pr in reviewed_prs:
         review_time = pr["first_review_at"] - pr["created_at"]
+        if exclude_weekends:
+            review_time = get_time_without_weekend(
+                pr["created_at"], pr["first_review_at"]
+            )
         review_time_list.append(review_time)
 
     total_prs = len(formatted_prs_list)
