@@ -59,7 +59,7 @@ from hotfixes_count import count_hotfixes
     "--exclude-weekends",
     is_flag=True,
     default=False,
-    help="Will include all hotfixes in the metric calculation.",
+    help="Will exclude weekends from time metric.",
 )
 def cli(
     metric, start_date, end_date, include_hotfixes, exclude_authors, exclude_weekends

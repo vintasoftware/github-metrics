@@ -18,6 +18,8 @@ The run command takes the following arguments:
 
 `--include-hotfixes`: Will include all hotfixes in the metric calculation. By default, this value is false.
 
+`--exclude-weekends`: Will exclude weekend time from time metrics (time to merge, time to open, time to review).
+
 #### [Time To Merge](#ttm)
 `github_metrics --metric=ttm --start-date=2021-03-22 --end-date=2021-03-24`
 
