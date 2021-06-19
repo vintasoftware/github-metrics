@@ -1,4 +1,5 @@
-from common import extract_datetime_or_none, get_author_login, get_reviews_from_pr
+from common import get_author_login
+import datetime
 
 
 def is_closed(pr):
@@ -92,3 +93,32 @@ def format_timedelta(timedelta):
     hours, remainder = divmod(timedelta.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     return f"{days} days {hours} hours {minutes} minutes"
+
+
+def get_weekend_time(start_at, end_at):
+    day_count = end_at.date() - start_at.date()
+    weekends = datetime.timedelta()
+    for i in range(0, day_count.days + 1):
+        day = start_at + datetime.timedelta(days=i)
+
+        # 5 represents Saturday and 6 represents Sunday
+        if day.weekday() == 5 or day.weekday() == 6:
+            # In a time period, if it's starting a time count, count from the beginning until end of day
+            if i == 0:
+                weekends += (
+                    datetime.datetime(day.year, day.month, day.day, 23, 59, 59) - day
+                )
+
+            # If it's the end of a time period, count from start of day until the end time
+            elif i == day_count.days:
+                weekends += end_at - datetime.datetime(day.year, day.month, day.day)
+
+            else:
+                weekends += datetime.timedelta(days=1)
+    return weekends
+
+
+def get_time_without_weekend(start_at, end_at):
+    weekend_timedelta = get_weekend_time(start_at, end_at)
+    timedelta = end_at - start_at
+    return timedelta - weekend_timedelta
