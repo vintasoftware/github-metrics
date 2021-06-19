@@ -96,21 +96,18 @@ def format_timedelta(timedelta):
 
 
 def get_weekend_count(start_at, end_at):
-    day_count = end_at.day - start_at.day
-    number_of_complete_weeks = day_count // 7
-    weekends = number_of_complete_weeks * 2
-
-    additional_days = day_count % 7
-
+    day_count = end_at.date() - start_at.date()
     days_index = []
-    for i in range(0, additional_days):
+
+    for i in range(0, day_count.days + 1):
         day = start_at + datetime.timedelta(days=i)
         days_index.append(day.weekday())
 
+    weekends = 0
     if 5 in days_index:
-        weekends += 1
+        weekends += days_index.count(5)
     if 6 in days_index:
-        weekends += 1
+        weekends += days_index.count(6)
 
     return weekends
 
