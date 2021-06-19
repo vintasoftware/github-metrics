@@ -7,6 +7,8 @@ from github_metrics.metrics.tto import call_time_to_open_statistics
 from github_metrics.metrics.mr import call_merge_rate_statistics
 from github_metrics.metrics.pr_size import call_pr_size_statistics
 from github_metrics.metrics.hotfixes_count import count_hotfixes
+from github_metrics.metrics.all import call_all_metrics
+
 
 from github_metrics.request import fetch_prs_between
 
@@ -15,7 +17,6 @@ from github_metrics.request import fetch_prs_between
 @click.option(
     "--metric",
     type=str,
-    required=True,
     help="""The reference of the metric you'd like to run:
     
     \b
@@ -95,3 +96,5 @@ def cli(
         call_pr_size_statistics(pr_list, include_hotfixes, user_list)
     elif metric == "hotfixes_count":
         count_hotfixes(pr_list, user_list)
+    else:
+        call_all_metrics(pr_list, include_hotfixes, user_list, exclude_weekends)
