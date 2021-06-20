@@ -10,6 +10,7 @@ with open("requirements.txt") as requirements_file:
 setup(
     name="github_metrics",
     version="0.1",
+    python_requires=">=3.8",
     py_modules=["github_metrics"],
     install_requires=requirements,
     entry_points="""
