@@ -16,6 +16,8 @@ The run command takes the following arguments:
 
 `--exclude-authors`: Will exclude all PRs created by the listed authors. This argument must list usernames separated by a comma. Example: `--exclude_authors=pantoja,github_username,other_username`
 
+`--filter-authors`: Will take into consideration only the PRs created by the authors in this list. This argument must list usernames separated by a comma. Example: `--exclude_authors=pantoja,github_username,other_username`
+
 `--include-hotfixes`: Will include all hotfixes in the metric calculation. By default, this value is false.
 
 `--exclude-weekends`: Will exclude weekend time from time metrics (time to merge, time to open, time to review).

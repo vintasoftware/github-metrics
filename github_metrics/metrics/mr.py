@@ -32,9 +32,11 @@ def get_prs_authors(pr_list):
     return pr_author_list
 
 
-def call_merge_rate_statistics(pr_list, include_hotfixes=False, exclude_authors=[]):
+def call_merge_rate_statistics(
+    pr_list, include_hotfixes, exclude_authors, filter_authors
+):
     valid_pr_list = filter_valid_prs(
-        pr_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
+        pr_list, include_hotfixes, exclude_authors, filter_authors
     )
     formatted_pr_list = format_pr_list(valid_pr_list)
     merged_prs = get_merged_prs(formatted_pr_list)

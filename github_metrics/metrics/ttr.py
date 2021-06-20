@@ -74,10 +74,10 @@ def filter_reviewed_prs(pr_list):
 
 
 def calulate_prs_review_time_statistics(
-    pr_list, include_hotfixes, exclude_authors, exclude_weekends=False
+    pr_list, include_hotfixes, exclude_authors, filter_authors, exclude_weekends
 ):
     valid_pr_list = filter_valid_prs(
-        pr_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
+        pr_list, include_hotfixes, exclude_authors, filter_authors
     )
     formatted_pr_list = format_pr_list(valid_pr_list)
     reviewed_prs = filter_reviewed_prs(formatted_pr_list)

@@ -54,12 +54,13 @@ def get_merged_prs(formatted_pr_list):
 
 def call_mean_time_to_merge_statistics(
     pr_list,
-    include_hotfixes=False,
-    exclude_authors=[],
+    include_hotfixes,
+    exclude_authors,
+    filter_authors,
     exclude_weekends=False,
 ):
     valid_pr_list = filter_valid_prs(
-        pr_list, include_hotfixes=include_hotfixes, exclude_authors=exclude_authors
+        pr_list, include_hotfixes, exclude_authors, filter_authors
     )
     formatted_pr_list = format_pr_list(valid_pr_list)
     merged_prs = get_merged_prs(formatted_pr_list)
