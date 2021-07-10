@@ -1,7 +1,7 @@
 import unittest
 import datetime
 
-from github_metrics.metrics.ttr import (
+from github_metrics.metrics.time_to_review import (
     filter_reviewed_prs,
     filter_prs_with_more_than_24h_before_review,
 )
