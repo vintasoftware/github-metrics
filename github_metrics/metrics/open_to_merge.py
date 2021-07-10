@@ -40,13 +40,11 @@ def calulate_prs_open_to_merge_time_statistics(
         pr_list, include_hotfixes, exclude_authors, filter_authors
     )
     formatted_pr_list = format_pr_list(valid_pr_list)
-    pr_list = get_merged_prs(formatted_pr_list)
+    merged_pr_list = get_merged_prs(formatted_pr_list)
 
     review_time_list = []
-    import ipdb
 
-    ipdb.set_trace()
-    for pr in pr_list:
+    for pr in merged_pr_list:
         open_pr_duration = pr["merged_at"] - pr["created_at"]
         if exclude_weekends:
             open_pr_duration = get_time_without_weekend(
@@ -62,7 +60,8 @@ def calulate_prs_open_to_merge_time_statistics(
         f"""
             \033[1mOpen to Merge\033[0m
             ----------------------------------
-            Merged PRs count: {len(pr_list)}
+            Merged PRs count: {len(merged_pr_list)}
+            Valid Merged PRs rate: {round((len(merged_pr_list) * 100) / len(valid_pr_list), 2)}%
             ----------------------------------
             Mean: {format_timedelta(mean)} ({round(mean.total_seconds()/3600, 2)} hours)
             Median: {format_timedelta(median)} ({round(median.total_seconds()/3600, 2)} hours)
