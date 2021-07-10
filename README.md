@@ -34,6 +34,9 @@ The run command takes the following arguments:
 #### [Time to Open](#tto)
 `github_metrics --metric=tto --start-date=2020-11-10 --end-date=2020-11-18`
 
+#### [Open to Merge Time](#otm)
+`github_metrics --metric=otm --start-date=2020-11-10 --end-date=2020-11-18`
+
 #### [Merge Rate](#mr)
 `github_metrics --metric=mr --start-date=2021-03-22 --end-date=2021-03-24`
 
@@ -52,6 +55,9 @@ It calculates the time a PR waited for, or has been waiting for the first review
 
 - <b id="tto">Time To Open (tto):</b>
 The time elapsed between a user's first commit to a branch and opening a pull request for that branch.
+
+- <b id="tto">Open To Merge Time (otm):</b>
+Returns statistics related to the time between opening and merging a pull request.
 
 - <b id="mr">Merge Rate (mr):</b>
 It measures the total number of merged pull requests to the total number of developers active in this time period (number of merged PRS / dev). A value closer to 1 indicates that each developer is merging a PR. a higher number indicates more merged PRs than devs, and vice versa.
