@@ -91,3 +91,13 @@ The number of hotfixes in the period.
 
 ![image](https://user-images.githubusercontent.com/38823219/117503308-27d1ab80-af57-11eb-845c-a8640cfe023d.png)
 
+
+Release Process
+===============
+
+For maintainers only:
+
+- Run ``bump2version <minor|major|patch>`` to update the version number (pick one of the options)
+
+    - Version number on ``github_metrics/__init__.py`` and ``setup.py`` will be updated automatically
+    - You can specify the ``--new_version`` flag in case you wish to manually set the newest version (if not provided, it will be done automatically based on the chosen option)
