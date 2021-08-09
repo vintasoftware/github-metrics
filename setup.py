@@ -1,6 +1,5 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from pkg_resources import parse_requirements
-
 
 with open("requirements.txt") as requirements_file:
     requirements = [
@@ -17,10 +16,12 @@ setup(
     description="Generate development metrics using github data for your project.",
     url="https://github.com/vintasoftware/github-metrics",
     author="Victoria Pantoja (Vinta Software)",
-    author_email="vicpantojadoamaral@gmail.com",
+    author_email="victoria.pantoja@vinta.com.br",
     python_requires=">=3.8",
     py_modules=["github_metrics"],
     install_requires=requirements,
+    include_package_data=True,
+    packages=find_packages(include=["github_metrics", "github_metrics.*"]),
     entry_points="""
         [console_scripts]
         github_metrics=github_metrics.run:cli
