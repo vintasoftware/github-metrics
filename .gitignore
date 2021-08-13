@@ -30,3 +30,4 @@ lib/
 lib64/
 *.egg-info/
 *.egg
+dist/

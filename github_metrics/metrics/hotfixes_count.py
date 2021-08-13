@@ -1,4 +1,4 @@
-from github_metrics.helpers import filter_hotfixes
+from .helpers import filter_hotfixes
 
 
 def count_hotfixes(pr_list, exclude_authors, filter_authors):

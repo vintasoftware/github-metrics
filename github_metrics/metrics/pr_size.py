@@ -1,6 +1,6 @@
 import numpy
 
-from github_metrics.helpers import filter_valid_prs
+from .helpers import filter_valid_prs
 
 
 def format_pr_list(pr_list):

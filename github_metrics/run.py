@@ -1,19 +1,19 @@
 import click
 import arrow
 
-from github_metrics.metrics.time_to_merge import call_mean_time_to_merge_statistics
-from github_metrics.metrics.time_to_review import calulate_prs_review_time_statistics
-from github_metrics.metrics.time_to_open import call_time_to_open_statistics
-from github_metrics.metrics.merge_rate import call_merge_rate_statistics
-from github_metrics.metrics.pr_size import call_pr_size_statistics
-from github_metrics.metrics.hotfixes_count import count_hotfixes
-from github_metrics.metrics.open_to_merge import (
+from .metrics.time_to_merge import call_mean_time_to_merge_statistics
+from .metrics.time_to_review import calulate_prs_review_time_statistics
+from .metrics.time_to_open import call_time_to_open_statistics
+from .metrics.merge_rate import call_merge_rate_statistics
+from .metrics.pr_size import call_pr_size_statistics
+from .metrics.hotfixes_count import count_hotfixes
+from .metrics.open_to_merge import (
     calulate_prs_open_to_merge_time_statistics,
 )
-from github_metrics.metrics.all import call_all_metrics
+from .metrics.all import call_all_metrics
 
 
-from github_metrics.request import fetch_prs_between
+from .request import fetch_prs_between
 
 
 @click.command()
