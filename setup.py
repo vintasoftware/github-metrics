@@ -21,7 +21,7 @@ setup(
     py_modules=["github_metrics"],
     install_requires=requirements,
     include_package_data=True,
-    packages=find_packages(include=["github_metrics", "github_metrics.*"]),
+    packages=find_packages(exclude=("tests*",)),
     entry_points="""
         [console_scripts]
         github_metrics=github_metrics.run:cli

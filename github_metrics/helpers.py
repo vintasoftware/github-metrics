@@ -1,4 +1,4 @@
-from .common import get_author_login
+from github_metrics.common import get_author_login
 import datetime
 
 

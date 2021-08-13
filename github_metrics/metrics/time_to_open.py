@@ -1,7 +1,7 @@
 import numpy
 
-from .common import extract_datetime_or_none, get_author_login
-from .helpers import (
+from github_metrics.common import extract_datetime_or_none, get_author_login
+from github_metrics.helpers import (
     filter_valid_prs,
     format_timedelta,
     get_time_without_weekend,
