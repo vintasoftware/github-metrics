@@ -1,6 +1,7 @@
 import click
 import arrow
-
+import ipdb
+import os
 from github_metrics.metrics.time_to_merge import call_mean_time_to_merge_statistics
 from github_metrics.metrics.time_to_review import calulate_prs_review_time_statistics
 from github_metrics.metrics.time_to_open import call_time_to_open_statistics
@@ -14,9 +15,32 @@ from github_metrics.metrics.all import call_all_metrics
 
 
 from github_metrics.request import fetch_prs_between
+from settings import BASE_DIR
+
+
+def setup_enviroment_variables():
+    github_username = input("Github username: ")
+    github_token = input("Github token: ")
+    organization_name = input("Name of the organization: ")
+    repository_name = input("Repository name: ")
+
+    with open(os.path.join(BASE_DIR, ".env"), "w") as file:
+        content = """GITHUB_LOGIN="{github_username}"\nGITHUB_TOKEN="{github_token}"\nORG_NAME="{organization_name}"\nREPOSITORY_NAME="{repository_name}"\n""".format(
+            github_username=github_username,
+            github_token=github_token,
+            organization_name=organization_name,
+            repository_name=repository_name,
+        )
+        file.write(content)
 
 
 @click.command()
+@click.option(
+    "--setup",
+    is_flag=True,
+    default=False,
+    help="Setup your enviroment variables",
+)
 @click.option(
     "--metric",
     type=str,
@@ -35,7 +59,6 @@ from github_metrics.request import fetch_prs_between
 @click.option(
     "--start-date",
     type=str,
-    required=True,
     help="""The metric start date.
     
     Date in format YYYY-mm-dd""",
@@ -43,7 +66,6 @@ from github_metrics.request import fetch_prs_between
 @click.option(
     "--end-date",
     type=str,
-    required=True,
     help="""The metric cutoff date.
     
     Date in format YYYY-mm-dd""",
@@ -84,10 +106,16 @@ def cli(
     exclude_authors,
     filter_authors,
     exclude_weekends,
+    setup,
 ):
     """
     Generates metrics from Github API.
     """
+
+    if setup:
+        setup_enviroment_variables()
+        return
+
     start_date = arrow.get(start_date)
     end_date = arrow.get(f"{end_date}T23:59:59")
 
