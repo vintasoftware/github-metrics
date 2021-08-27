@@ -70,7 +70,7 @@ The number of hotfixes in the period.
 
 ## Installing the project
 1. Install using `pip install github-metrics`
-2. Setup settings variable by running `github-metrics --setup`. You'll be asked to give following information: 
+2. Setup settings variable by running `github_metrics --setup`. You'll be asked to give following information: 
 
 `Github username`: Your github account login
 `Enter a github token`: An access token generated with your github account.  More information accessible through [this guide](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). The lib requires full repo access for it to work
