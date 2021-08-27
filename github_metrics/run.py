@@ -1,6 +1,5 @@
 import click
 import arrow
-import ipdb
 import os
 from github_metrics.metrics.time_to_merge import call_mean_time_to_merge_statistics
 from github_metrics.metrics.time_to_review import calulate_prs_review_time_statistics
