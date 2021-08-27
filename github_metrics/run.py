@@ -14,7 +14,7 @@ from github_metrics.metrics.all import call_all_metrics
 
 
 from github_metrics.request import fetch_prs_between
-from settings import BASE_DIR
+from github_metrics.settings import BASE_DIR
 
 
 def setup_enviroment_variables():
@@ -24,11 +24,13 @@ def setup_enviroment_variables():
     repository_name = input("Repository name: ")
 
     with open(os.path.join(BASE_DIR, ".env"), "w") as file:
-        content = """GITHUB_LOGIN="{github_username}"\nGITHUB_TOKEN="{github_token}"\nORG_NAME="{organization_name}"\nREPOSITORY_NAME="{repository_name}"\n""".format(
-            github_username=github_username,
-            github_token=github_token,
-            organization_name=organization_name,
-            repository_name=repository_name,
+        content = "\n".join(
+            [
+                f"GITHUB_LOGIN={github_username}",
+                f"GITHUB_TOKEN={github_token}",
+                f"ORG_NAME={organization_name}",
+                f"REPOSITORY_NAME={repository_name}",
+            ]
         )
         file.write(content)
 

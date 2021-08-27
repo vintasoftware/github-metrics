@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as readme_file:
 
 setup(
     name="github_metrics",
-    version="0.0.6",
+    version="0.0.10",
     description="Generate development metrics using github data for your project.",
     url="https://github.com/vintasoftware/github-metrics",
     author="Victoria Pantoja (Vinta Software)",
