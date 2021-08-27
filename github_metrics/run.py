@@ -14,7 +14,7 @@ from github_metrics.metrics.all import call_all_metrics
 
 
 from github_metrics.request import fetch_prs_between
-from settings import BASE_DIR
+from github_metrics.settings import BASE_DIR
 
 
 def setup_enviroment_variables():
