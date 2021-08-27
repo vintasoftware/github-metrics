@@ -77,6 +77,7 @@ The number of hotfixes in the period.
 `Name of the organization`: The name of the organization where the repository is located
 `Repository name`: The repository name of the project of your choice 
 
+**NOTE:** Running the `--setup` flag will overwrite the existing enviroment settings.
 
 ## Project setup
 
