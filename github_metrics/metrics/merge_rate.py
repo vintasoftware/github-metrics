@@ -47,12 +47,10 @@ def call_merge_rate_statistics(
     merge_rate = len(merged_prs) / len(prs_authors)
 
     print(
-        f"""
-            \033[1mMerge Rate\033[0m
-            ----------------------------------
-            Total PRs calculated: {len(merged_prs)}
-            Total devs calculated: {len(prs_authors)}
-            ----------------------------------
-            Merge Rate: {merge_rate}
-            """
+        f"     \033[1mMerge Rate\033[0m"
+        f"     ----------------------------------"
+        f"     Total PRs calculated: {len(merged_prs)}"
+        f"     Total devs calculated: {len(prs_authors)}"
+        f"     ----------------------------------"
+        f"     Merge Rate: {merge_rate}"
     )

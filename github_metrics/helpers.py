@@ -1,5 +1,6 @@
-from github_metrics.common import get_author_login
 import datetime
+
+from github_metrics.common import get_author_login
 
 
 def is_closed(pr):
@@ -93,7 +94,7 @@ def filter_hotfixes(pr_list, exclude_authors, filter_authors):
     return valid_pr_list
 
 
-def format_timedelta(timedelta):
+def format_timedelta_to_text(timedelta):
     if timedelta.total_seconds() < 0:
         return "Invalid timeframe"
 
@@ -101,6 +102,10 @@ def format_timedelta(timedelta):
     hours, remainder = divmod(timedelta.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     return f"{days} days {hours} hours {minutes} minutes"
+
+
+def format_timedelta_to_hours(timedelta):
+    return round(timedelta.total_seconds() / 3600, 2)
 
 
 def get_weekend_time(start_at, end_at):
@@ -111,7 +116,8 @@ def get_weekend_time(start_at, end_at):
 
         # 5 represents Saturday and 6 represents Sunday
         if day.weekday() == 5 or day.weekday() == 6:
-            # In a time period, if it's starting a time count, count from the beginning until end of day
+            # In a time period, if it's starting a time count,
+            # count from the beginning until end of day
             if i == 0:
                 weekends += (
                     datetime.datetime(day.year, day.month, day.day, 23, 59, 59) - day

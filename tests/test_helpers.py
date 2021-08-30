@@ -1,14 +1,14 @@
-import unittest
 import datetime
+import unittest
 
 from github_metrics.helpers import (
-    format_timedelta,
-    exclude_closeds,
-    exclude_releases,
-    exclude_merge_backs_from_prod,
     exclude_authors_in_list,
-    filter_authors_in_list,
+    exclude_closeds,
     exclude_hotfixes,
+    exclude_merge_backs_from_prod,
+    exclude_releases,
+    filter_authors_in_list,
+    format_timedelta_to_text,
     get_weekend_time,
 )
 
@@ -79,7 +79,7 @@ class TestHelpers(unittest.TestCase):
 
     def test_format_time_string(self):
         time = datetime.timedelta(seconds=1 * 24 * 60 * 60 + 48035)
-        formatted_time = format_timedelta(time)
+        formatted_time = format_timedelta_to_text(time)
 
         hours, remainder = divmod(time.seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
@@ -89,7 +89,7 @@ class TestHelpers(unittest.TestCase):
 
     def test_negative_timedelta_format_time_returns_invalid(self):
         time = datetime.timedelta(seconds=1 * 24 * 60 * 60 + 48035)
-        formatted_time = format_timedelta(-time)
+        formatted_time = format_timedelta_to_text(-time)
 
         self.assertEqual(formatted_time, "Invalid timeframe")
 
