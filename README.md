@@ -105,7 +105,11 @@ Release Process
 
 For maintainers only:
 
+- Run `rm -rf build dist` to delete current build archives
+- Install dependencies with `pip install -r ./requirements.txt`. Make sure you are inside a virtual enviroment
 - Run ``bump2version <minor|major|patch>`` to update the version number (pick one of the options)
 
     - Version number on ``github_metrics/__init__.py`` and ``setup.py`` will be updated automatically
     - You can specify the ``--new_version`` flag in case you wish to manually set the newest version (if not provided, it will be done automatically based on the chosen option)
+- Build the artifacts with `python setup.py sdist bdist_wheel --universal`
+- Upload the new version with `twine upload dist/*`
