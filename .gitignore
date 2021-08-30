@@ -31,3 +31,7 @@ lib64/
 *.egg-info/
 *.egg
 dist/
+sdist/
+
+# Previous releases' directories
+release-backup-*/
