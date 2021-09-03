@@ -68,6 +68,17 @@ It generates metrics related to the number of lines added and deleted in a PR. T
 - <b id="hotfixes-count">Hotfixes Count (hotfixes_count):</b>
 The number of hotfixes in the period.
 
+## Installing the project
+1. Install using `pip install github-metrics`
+2. Setup settings variable by running `github_metrics --setup`. You'll be asked to give following information: 
+
+`Github username`: Your github account login
+`Enter a github token`: An access token generated with your github account.  More information accessible through [this guide](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). The lib requires full repo access for it to work
+`Name of the organization`: The name of the organization where the repository is located
+`Repository name`: The repository name of the project of your choice 
+
+**NOTE:** Running the `--setup` flag will overwrite the existing enviroment settings.
+
 ## Project setup
 
 ### Dependencies setup
@@ -81,13 +92,24 @@ The number of hotfixes in the period.
 1. Create a .env file by copying from .env.example with `cp .env.example .env`
 2.  Fill settings variables:
 
-`REPOSITORY_NAME`: The repository name of the project of your choice 
-
-`ORG_NAME`: The name of the organization where the repository is located
-
-`GITHUB_LOGIN`: Your github account login
-
-`GITHUB_TOKEN`: An access token generated with your github account.  More information accessible through [this guide](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). The lib requires full repo access for it to work
+`REPOSITORY_NAME`: The name of the repository
+`ORG_NAME`: The name of the organization
+`GITHUB_LOGIN`: Your github account username
+`GITHUB_TOKEN`: The access token generated with your github account.
 
 ![image](https://user-images.githubusercontent.com/38823219/117503308-27d1ab80-af57-11eb-845c-a8640cfe023d.png)
 
+
+Release Process
+===============
+
+For maintainers only:
+
+- Run `rm -rf build dist` to delete current build archives
+- Install dependencies with `pip install -r ./requirements.txt`. Make sure you are inside a virtual enviroment
+- Run ``bump2version <minor|major|patch>`` to update the version number (pick one of the options)
+
+    - Version number on ``github_metrics/__init__.py`` and ``setup.py`` will be updated automatically
+    - You can specify the ``--new_version`` flag in case you wish to manually set the newest version (if not provided, it will be done automatically based on the chosen option)
+- Build the artifacts with `python setup.py sdist bdist_wheel --universal`
+- Upload the new version with `twine upload dist/*`
