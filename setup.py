@@ -1,5 +1,5 @@
-from setuptools import setup, find_packages
 from pkg_resources import parse_requirements
+from setuptools import find_packages, setup
 
 with open("requirements.txt") as requirements_file:
     requirements = [

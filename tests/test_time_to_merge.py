@@ -1,9 +1,9 @@
-import unittest
 import datetime
+import unittest
 
 from github_metrics.metrics.time_to_merge import (
-    get_merged_prs,
     call_mean_time_to_merge_statistics,
+    get_merged_prs,
 )
 
 

@@ -3,7 +3,8 @@ import numpy
 from github_metrics.common import extract_datetime_or_none, get_author_login
 from github_metrics.helpers import (
     filter_valid_prs,
-    format_timedelta,
+    format_timedelta_to_hours,
+    format_timedelta_to_text,
     get_time_without_weekend,
 )
 
@@ -67,13 +68,14 @@ def call_time_to_open_statistics(
     percentile = numpy.percentile(time_to_open, 95)
 
     print(
-        f"""
-            \033[1mTime to open\033[0m
-            ----------------------------------
-            Total PRs calculated: {len(formatted_pr_list)}
-            ----------------------------------
-            Mean: {format_timedelta(mean)} ({round(mean.total_seconds()/3600, 2)} hours)
-            Median: {format_timedelta(median)} ({round(median.total_seconds()/3600, 2)} hours)
-            95 percentile: {format_timedelta(percentile)} ({round(percentile.total_seconds()/3600, 2)} hours)
-            """
+        f"     \033[1mTime to open\033[0m"
+        f"    ----------------------------------"
+        f"    Total PRs calculated: {len(formatted_pr_list)}"
+        f"    ----------------------------------"
+        f"    Mean: {format_timedelta_to_text(mean)}"
+        f" ({format_timedelta_to_hours(mean)} hours)"
+        f"    Median: {format_timedelta_to_text(median)}"
+        f" ({format_timedelta_to_hours(median)} hours)"
+        f"    95 percentile: {format_timedelta_to_text(percentile)}"
+        f" ({format_timedelta_to_hours(percentile)} hours)"
     )

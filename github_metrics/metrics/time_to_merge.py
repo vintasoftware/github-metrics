@@ -3,7 +3,8 @@ import numpy
 from github_metrics.common import extract_datetime_or_none, get_author_login
 from github_metrics.helpers import (
     filter_valid_prs,
-    format_timedelta,
+    format_timedelta_to_hours,
+    format_timedelta_to_text,
     get_time_without_weekend,
 )
 
@@ -81,13 +82,14 @@ def call_mean_time_to_merge_statistics(
     percentile = numpy.percentile(time_to_merge_list, 95)
 
     print(
-        f"""
-            \033[1mTime to merge\033[0m
-            ----------------------------------
-            Total PRs calculated: {len(merged_prs)}
-            ----------------------------------
-            Mean: {format_timedelta(mean)} ({round(mean.total_seconds()/3600, 2)} hours)
-            Median: {format_timedelta(median)} ({round(median.total_seconds()/3600, 2)} hours)
-            95 percentile: {format_timedelta(percentile)} ({round(percentile.total_seconds()/3600, 2)} hours)
-            """
+        f"     \033[1mTime to merge\033[0m\n"
+        f"     ----------------------------------\n"
+        f"     Total PRs calculated: {len(merged_prs)}\n"
+        f"     ----------------------------------\n"
+        f"     Mean: {format_timedelta_to_text(mean)}"
+        f" ({format_timedelta_to_hours(mean)} hours)\n"
+        f"     Median: {format_timedelta_to_text(median)}"
+        f" ({format_timedelta_to_hours(median)} hours)\n"
+        f"     95 percentile: {format_timedelta_to_text(percentile)}"
+        f" ({format_timedelta_to_hours(percentile)} hours)\n"
     )

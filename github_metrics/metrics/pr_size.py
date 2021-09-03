@@ -35,17 +35,14 @@ def call_pr_size_statistics(pr_list, include_hotfixes, exclude_authors, filter_a
     rate_percentile = numpy.percentile(diff_line_rate, 95)
 
     print(
-        f"""
-            \033[1mPull Requests Size\033[0m
-            ----------------------------------
-            Total PRs calculated: {len(formatted_pr_list)}
-            ----------------------------------
-            Total Lines Mean: {round(total_mean, 2)} lines
-            Total Lines Median: {round(total_median, 2)} lines
-            Total Lines 95 percentile: {round(total_percentile, 2)} lines
-
-            Diff Rate Mean: {round(rate_mean, 2)}
-            Diff Rate Median: {round(rate_median, 2)}
-            Diff Rate 95 percentile: {round(rate_percentile, 2)}
-            """
+        f"     \033[1mPull Requests Size\033[0m\n"
+        f"     ----------------------------------\n"
+        f"     Total PRs calculated: {len(formatted_pr_list)}\n"
+        f"     ----------------------------------\n"
+        f"     Total Lines Mean: {round(total_mean, 2)} lines\n"
+        f"     Total Lines Median: {round(total_median, 2)} lines\n"
+        f"     Total Lines 95 percentile: {round(total_percentile, 2)} lines\n\n"
+        f"     Diff Rate Mean: {round(rate_mean, 2)}\n"
+        f"     Diff Rate Median: {round(rate_median, 2)}\n"
+        f"     Diff Rate 95 percentile: {round(rate_percentile, 2)}\n"
     )

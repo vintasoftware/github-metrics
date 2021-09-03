@@ -1,4 +1,4 @@
- 
+
 #!/bin/bash
 
 # Backup previous release
