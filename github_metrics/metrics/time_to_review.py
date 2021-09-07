@@ -4,7 +4,8 @@ import numpy
 from github_metrics.common import extract_datetime_or_none, get_author_login
 from github_metrics.helpers import (
     filter_valid_prs,
-    format_timedelta,
+    format_timedelta_to_hours,
+    format_timedelta_to_text,
     get_time_without_weekend,
 )
 
@@ -103,15 +104,18 @@ def calulate_prs_review_time_statistics(
     percentile = numpy.percentile(review_time_list, 95)
 
     print(
-        f"""
-            \033[1mTime to review\033[0m
-            ----------------------------------
-            Total valid PRs: {len(formatted_pr_list)}
-            Unreviewed PRs: {unreviewed_prs} ({round((unreviewed_prs * 100) / total_prs, 2)}%)
-            PRs with more than 24h waiting for review: {prs_over_24h} ({round(prs_over_24h * 100 / total_prs, 2)}%)
-            ----------------------------------
-            Mean: {format_timedelta(mean)} ({round(mean.total_seconds()/3600, 2)} hours)
-            Median: {format_timedelta(median)} ({round(median.total_seconds()/3600, 2)} hours)
-            95 percentile: {format_timedelta(percentile)} ({round(percentile.total_seconds()/3600, 2)} hours)
-        """
+        f"     \033[1mTime to review\033[0m"
+        f"    ----------------------------------"
+        f"    Total valid PRs: {len(formatted_pr_list)}"
+        f"    Unreviewed PRs: {unreviewed_prs}"
+        f" ({round((unreviewed_prs * 100) / total_prs, 2)}%)"
+        f"    PRs with more than 24h waiting for review: {prs_over_24h}"
+        f" ({round(prs_over_24h * 100 / total_prs, 2)}%)"
+        f"    ----------------------------------"
+        f"    Mean: {format_timedelta_to_text(mean)}"
+        f" ({format_timedelta_to_hours(mean)} hours)"
+        f"    Median: {format_timedelta_to_text(median)}"
+        f" ({format_timedelta_to_hours(median)} hours)"
+        f"    95 percentile: {format_timedelta_to_text(percentile)}"
+        f" ({format_timedelta_to_hours(percentile)} hours)"
     )

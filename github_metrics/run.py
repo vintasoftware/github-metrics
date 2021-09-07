@@ -1,18 +1,18 @@
-import click
-import arrow
 import os
-from github_metrics.metrics.time_to_merge import call_mean_time_to_merge_statistics
-from github_metrics.metrics.time_to_review import calulate_prs_review_time_statistics
-from github_metrics.metrics.time_to_open import call_time_to_open_statistics
-from github_metrics.metrics.merge_rate import call_merge_rate_statistics
-from github_metrics.metrics.pr_size import call_pr_size_statistics
+
+import arrow
+import click
+
+from github_metrics.metrics.all import call_all_metrics
 from github_metrics.metrics.hotfixes_count import count_hotfixes
+from github_metrics.metrics.merge_rate import call_merge_rate_statistics
 from github_metrics.metrics.open_to_merge import (
     calulate_prs_open_to_merge_time_statistics,
 )
-from github_metrics.metrics.all import call_all_metrics
-
-
+from github_metrics.metrics.pr_size import call_pr_size_statistics
+from github_metrics.metrics.time_to_merge import call_mean_time_to_merge_statistics
+from github_metrics.metrics.time_to_open import call_time_to_open_statistics
+from github_metrics.metrics.time_to_review import calulate_prs_review_time_statistics
 from github_metrics.request import fetch_prs_between
 from github_metrics.settings import BASE_DIR
 
@@ -46,7 +46,7 @@ def setup_enviroment_variables():
     "--metric",
     type=str,
     help="""The reference of the metric you'd like to run:
-    
+
     \b
     ttm - Time to Merge
     ttr - Time to Review
@@ -61,14 +61,14 @@ def setup_enviroment_variables():
     "--start-date",
     type=str,
     help="""The metric start date.
-    
+
     Date in format YYYY-mm-dd""",
 )
 @click.option(
     "--end-date",
     type=str,
     help="""The metric cutoff date.
-    
+
     Date in format YYYY-mm-dd""",
 )
 @click.option(

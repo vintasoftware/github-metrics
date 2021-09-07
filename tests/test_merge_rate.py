@@ -1,10 +1,10 @@
-import unittest
 import datetime
+import unittest
 
 from github_metrics.metrics.merge_rate import (
+    call_merge_rate_statistics,
     get_merged_prs,
     get_prs_authors,
-    call_merge_rate_statistics,
 )
 
 
