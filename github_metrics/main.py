@@ -3,6 +3,7 @@ from typing import Optional
 import arrow
 from fastapi import FastAPI
 
+from github_metrics.metrics.merge_rate import get_merge_rate_data
 from github_metrics.metrics.open_to_merge import get_open_to_merge_time_data
 from github_metrics.metrics.pr_size import get_pr_size_data
 from github_metrics.metrics.time_to_merge import get_time_to_merge_data
@@ -38,7 +39,7 @@ def read_item(
         )
 
         return {
-            "metric": metric,
+            "metric": "Time to merge",
             "mean": data["mean"],
             "median": data["median"],
             "percentile_95": data["percentile_95"],
@@ -55,7 +56,7 @@ def read_item(
         )
 
         return {
-            "metric": metric,
+            "metric": "Time to open",
             "mean": data["mean"],
             "median": data["median"],
             "percentile_95": data["percentile_95"],
@@ -72,7 +73,7 @@ def read_item(
         )
 
         return {
-            "metric": metric,
+            "metric": "Time to review",
             "mean": data["mean"],
             "median": data["median"],
             "percentile_95": data["percentile_95"],
@@ -90,7 +91,7 @@ def read_item(
         )
 
         return {
-            "metric": metric,
+            "metric": "PR size",
             "prs_list": data["total_prs"],
             "total_mean": data["total_mean"],
             "total_median": data["total_median"],
@@ -110,10 +111,25 @@ def read_item(
         )
 
         return {
-            "metric": metric,
+            "metric": "Open to merge",
             "mean": data["mean"],
             "median": data["median"],
             "percentile_95": data["percentile_95"],
             "prs_list": data["total_prs"],
             "merged_pr_rate": data["merged_pr_rate"],
+        }
+
+    if metric == "mr":
+        data = get_merge_rate_data(
+            pr_list,
+            include_hotfixes,
+            exclude_author,
+            filter_author,
+        )
+
+        return {
+            "metric": "Merge Rate",
+            "prs_list": data["total_prs"],
+            "prs_authors": data["prs_authors"],
+            "merge_rate": data["merge_rate"],
         }
