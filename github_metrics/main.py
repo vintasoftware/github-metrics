@@ -3,6 +3,7 @@ from typing import Optional
 import arrow
 from fastapi import FastAPI
 
+from github_metrics.metrics.hotfixes_count import get_hotfixes_data
 from github_metrics.metrics.merge_rate import get_merge_rate_data
 from github_metrics.metrics.open_to_merge import get_open_to_merge_time_data
 from github_metrics.metrics.pr_size import get_pr_size_data
@@ -128,8 +129,16 @@ def read_item(
         )
 
         return {
-            "metric": "Merge Rate",
+            "metric": "Merge rate",
             "prs_list": data["total_prs"],
             "prs_authors": data["prs_authors"],
             "merge_rate": data["merge_rate"],
+        }
+
+    if metric == "hotfixes_count":
+        data = get_hotfixes_data(pr_list, exclude_author, filter_author)
+
+        return {
+            "metric": "Hotfix count",
+            "hotfix_list": data["hotfix_list"],
         }
