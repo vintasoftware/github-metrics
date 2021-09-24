@@ -9,20 +9,15 @@ from github_metrics.request import fetch_prs_between
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/metrics/{metric}")
+@app.get("/api/metrics/{metric}")
 def read_item(
     metric: str,
     start_date: str,
     end_date: str,
     include_hotfixes: Optional[bool] = False,
     exclude_weekends: Optional[bool] = True,
-    exclude_authors: Optional[str] = None,
-    filter_authors: Optional[str] = None,
+    exclude_author: Optional[str] = None,
+    filter_author: Optional[str] = None,
 ):
     start = arrow.get(start_date)
     end = arrow.get(f"{end_date}T23:59:59")
@@ -33,8 +28,8 @@ def read_item(
         data = get_time_to_merge_data(
             pr_list,
             include_hotfixes,
-            exclude_authors,
-            filter_authors,
+            exclude_author,
+            filter_author,
             exclude_weekends,
         )
 
