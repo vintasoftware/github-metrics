@@ -3,6 +3,7 @@ from typing import Optional
 import arrow
 from fastapi import FastAPI
 
+from github_metrics.metrics.open_to_merge import get_open_to_merge_time_data
 from github_metrics.metrics.pr_size import get_pr_size_data
 from github_metrics.metrics.time_to_merge import get_time_to_merge_data
 from github_metrics.metrics.time_to_open import get_time_to_open_data
@@ -97,4 +98,22 @@ def read_item(
             "rate_mean": data["rate_mean"],
             "rate_median": data["rate_median"],
             "rate_percentile_95": data["rate_percentile_95"],
+        }
+
+    if metric == "otm":
+        data = get_open_to_merge_time_data(
+            pr_list,
+            include_hotfixes,
+            exclude_author,
+            filter_author,
+            exclude_weekends,
+        )
+
+        return {
+            "metric": metric,
+            "mean": data["mean"],
+            "median": data["median"],
+            "percentile_95": data["percentile_95"],
+            "prs_list": data["total_prs"],
+            "merged_pr_rate": data["merged_pr_rate"],
         }
