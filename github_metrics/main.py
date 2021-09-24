@@ -5,6 +5,7 @@ from fastapi import FastAPI
 
 from github_metrics.metrics.time_to_merge import get_time_to_merge_data
 from github_metrics.metrics.time_to_open import get_time_to_open_data
+from github_metrics.metrics.time_to_review import get_time_to_review_data
 from github_metrics.request import fetch_prs_between
 
 app = FastAPI()
@@ -57,4 +58,23 @@ def read_item(
             "median": data["median"],
             "percentile_95": data["percentile_95"],
             "prs_list": data["total_prs"],
+        }
+
+    if metric == "ttr":
+        data = get_time_to_review_data(
+            pr_list,
+            include_hotfixes,
+            exclude_author,
+            filter_author,
+            exclude_weekends,
+        )
+
+        return {
+            "metric": metric,
+            "mean": data["mean"],
+            "median": data["median"],
+            "percentile_95": data["percentile_95"],
+            "prs_list": data["total_prs"],
+            "unreviewed_prs": data["unreviewed_prs"],
+            "prs_over_24h": data["prs_over_24h"],
         }
