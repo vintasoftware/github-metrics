@@ -3,6 +3,7 @@ from typing import Optional
 import arrow
 from fastapi import FastAPI
 
+from github_metrics.metrics.pr_size import get_pr_size_data
 from github_metrics.metrics.time_to_merge import get_time_to_merge_data
 from github_metrics.metrics.time_to_open import get_time_to_open_data
 from github_metrics.metrics.time_to_review import get_time_to_review_data
@@ -77,4 +78,23 @@ def read_item(
             "prs_list": data["total_prs"],
             "unreviewed_prs": data["unreviewed_prs"],
             "prs_over_24h": data["prs_over_24h"],
+        }
+
+    if metric == "pr_size":
+        data = get_pr_size_data(
+            pr_list,
+            include_hotfixes,
+            exclude_author,
+            filter_author,
+        )
+
+        return {
+            "metric": metric,
+            "prs_list": data["total_prs"],
+            "total_mean": data["total_mean"],
+            "total_median": data["total_median"],
+            "total_percentile_95": data["total_percentile_95"],
+            "rate_mean": data["rate_mean"],
+            "rate_median": data["rate_median"],
+            "rate_percentile_95": data["rate_percentile_95"],
         }
