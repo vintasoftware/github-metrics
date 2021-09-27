@@ -120,7 +120,10 @@ def get_weekend_time(start_at, end_at):
             # count from the beginning until end of day
             if i == 0:
                 weekends += (
-                    datetime.datetime(day.year, day.month, day.day, 23, 59, 59) - day
+                    datetime.datetime(day.year, day.month, day.day, 23, 59, 59).replace(
+                        tzinfo=day.tzinfo
+                    )
+                    - day
                 )
 
             # If it's the end of a time period, count from start of day until the end time
