@@ -1,7 +1,7 @@
 from typing import Optional
 
 import arrow
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 from github_metrics.metrics.hotfixes_count import get_hotfixes_data
 from github_metrics.metrics.merge_rate import get_merge_rate_data
@@ -47,7 +47,7 @@ def read_item(
             "prs_list": data["merged_prs"],
         }
 
-    if metric == "tto":
+    elif metric == "tto":
         data = get_time_to_open_data(
             pr_list,
             include_hotfixes,
@@ -64,7 +64,7 @@ def read_item(
             "prs_list": data["total_prs"],
         }
 
-    if metric == "ttr":
+    elif metric == "ttr":
         data = get_time_to_review_data(
             pr_list,
             include_hotfixes,
@@ -83,7 +83,7 @@ def read_item(
             "prs_over_24h": data["prs_over_24h"],
         }
 
-    if metric == "pr_size":
+    elif metric == "pr_size":
         data = get_pr_size_data(
             pr_list,
             include_hotfixes,
@@ -102,7 +102,7 @@ def read_item(
             "rate_percentile_95": data["rate_percentile_95"],
         }
 
-    if metric == "otm":
+    elif metric == "otm":
         data = get_open_to_merge_time_data(
             pr_list,
             include_hotfixes,
@@ -120,7 +120,7 @@ def read_item(
             "merged_pr_rate": data["merged_pr_rate"],
         }
 
-    if metric == "mr":
+    elif metric == "mr":
         data = get_merge_rate_data(
             pr_list,
             include_hotfixes,
@@ -135,10 +135,13 @@ def read_item(
             "merge_rate": data["merge_rate"],
         }
 
-    if metric == "hotfixes_count":
+    elif metric == "hotfixes_count":
         data = get_hotfixes_data(pr_list, exclude_author, filter_author)
 
         return {
             "metric": "Hotfix count",
             "hotfix_list": data["hotfix_list"],
         }
+
+    else:
+        raise HTTPException(status_code=403, detail="Item not found")
