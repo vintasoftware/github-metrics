@@ -55,10 +55,10 @@ def get_merged_prs(formatted_pr_list):
 
 def get_time_to_merge_data(
     pr_list,
-    include_hotfixes=False,
-    exclude_authors=[],
-    filter_authors=[],
-    exclude_weekends=True,
+    include_hotfixes,
+    exclude_authors,
+    filter_authors,
+    exclude_weekends,
 ):
     valid_pr_list = filter_valid_prs(
         pr_list, include_hotfixes, exclude_authors, filter_authors
