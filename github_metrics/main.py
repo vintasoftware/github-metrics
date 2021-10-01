@@ -28,15 +28,20 @@ def read_item(
     start = arrow.get(start_date)
     end = arrow.get(f"{end_date}T23:59:59")
 
+    if end > start:
+        raise HTTPException(
+            status_code=403, detail="Date range is not in chronological order"
+        )
+
     pr_list = fetch_prs_between(start, end)
 
     if metric == "ttm":
         data = get_time_to_merge_data(
-            pr_list,
-            include_hotfixes,
-            exclude_author,
-            filter_author,
-            exclude_weekends,
+            pr_list=pr_list,
+            include_hotfixes=include_hotfixes,
+            exclude_author=exclude_author,
+            filter_author=filter_author,
+            exclude_weekends=exclude_weekends,
         )
 
         return {
@@ -49,11 +54,11 @@ def read_item(
 
     elif metric == "tto":
         data = get_time_to_open_data(
-            pr_list,
-            include_hotfixes,
-            exclude_author,
-            filter_author,
-            exclude_weekends,
+            pr_list=pr_list,
+            include_hotfixes=include_hotfixes,
+            exclude_author=exclude_author,
+            filter_author=filter_author,
+            exclude_weekends=exclude_weekends,
         )
 
         return {
@@ -66,11 +71,11 @@ def read_item(
 
     elif metric == "ttr":
         data = get_time_to_review_data(
-            pr_list,
-            include_hotfixes,
-            exclude_author,
-            filter_author,
-            exclude_weekends,
+            pr_list=pr_list,
+            include_hotfixes=include_hotfixes,
+            exclude_author=exclude_author,
+            filter_author=filter_author,
+            exclude_weekends=exclude_weekends,
         )
 
         return {
@@ -85,10 +90,10 @@ def read_item(
 
     elif metric == "pr_size":
         data = get_pr_size_data(
-            pr_list,
-            include_hotfixes,
-            exclude_author,
-            filter_author,
+            pr_list=pr_list,
+            include_hotfixes=include_hotfixes,
+            exclude_author=exclude_author,
+            filter_author=filter_author,
         )
 
         return {
@@ -104,11 +109,11 @@ def read_item(
 
     elif metric == "otm":
         data = get_open_to_merge_time_data(
-            pr_list,
-            include_hotfixes,
-            exclude_author,
-            filter_author,
-            exclude_weekends,
+            pr_list=pr_list,
+            include_hotfixes=include_hotfixes,
+            exclude_author=exclude_author,
+            filter_author=filter_author,
+            exclude_weekends=exclude_weekends,
         )
 
         return {
@@ -122,10 +127,10 @@ def read_item(
 
     elif metric == "mr":
         data = get_merge_rate_data(
-            pr_list,
-            include_hotfixes,
-            exclude_author,
-            filter_author,
+            pr_list=pr_list,
+            include_hotfixes=include_hotfixes,
+            exclude_author=exclude_author,
+            filter_author=filter_author,
         )
 
         return {
@@ -136,7 +141,9 @@ def read_item(
         }
 
     elif metric == "hotfixes_count":
-        data = get_hotfixes_data(pr_list, exclude_author, filter_author)
+        data = get_hotfixes_data(
+            pr_list=pr_list, exclude_author=exclude_author, filter_author=filter_author
+        )
 
         return {
             "metric": "Hotfix count",
