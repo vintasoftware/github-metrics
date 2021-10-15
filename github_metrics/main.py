@@ -39,8 +39,8 @@ def read_item(
         data = get_time_to_merge_data(
             pr_list=pr_list,
             include_hotfixes=include_hotfixes,
-            exclude_author=exclude_author,
-            filter_author=filter_author,
+            exclude_authors=exclude_author,
+            filter_authors=filter_author,
             exclude_weekends=exclude_weekends,
         )
 
@@ -56,8 +56,8 @@ def read_item(
         data = get_time_to_open_data(
             pr_list=pr_list,
             include_hotfixes=include_hotfixes,
-            exclude_author=exclude_author,
-            filter_author=filter_author,
+            exclude_authors=exclude_author,
+            filter_authors=filter_author,
             exclude_weekends=exclude_weekends,
         )
 
@@ -73,8 +73,8 @@ def read_item(
         data = get_time_to_review_data(
             pr_list=pr_list,
             include_hotfixes=include_hotfixes,
-            exclude_author=exclude_author,
-            filter_author=filter_author,
+            exclude_authors=exclude_author,
+            filter_authors=filter_author,
             exclude_weekends=exclude_weekends,
         )
 
@@ -92,8 +92,8 @@ def read_item(
         data = get_pr_size_data(
             pr_list=pr_list,
             include_hotfixes=include_hotfixes,
-            exclude_author=exclude_author,
-            filter_author=filter_author,
+            exclude_authors=exclude_author,
+            filter_authors=filter_author,
         )
 
         return {
@@ -111,8 +111,8 @@ def read_item(
         data = get_open_to_merge_time_data(
             pr_list=pr_list,
             include_hotfixes=include_hotfixes,
-            exclude_author=exclude_author,
-            filter_author=filter_author,
+            exclude_authors=exclude_author,
+            filter_authors=filter_author,
             exclude_weekends=exclude_weekends,
         )
 
@@ -129,8 +129,8 @@ def read_item(
         data = get_merge_rate_data(
             pr_list=pr_list,
             include_hotfixes=include_hotfixes,
-            exclude_author=exclude_author,
-            filter_author=filter_author,
+            exclude_authors=exclude_author,
+            filter_authors=filter_author,
         )
 
         return {
@@ -142,7 +142,9 @@ def read_item(
 
     elif metric == "hotfixes_count":
         data = get_hotfixes_data(
-            pr_list=pr_list, exclude_author=exclude_author, filter_author=filter_author
+            pr_list=pr_list,
+            exclude_authors=exclude_author,
+            filter_authors=filter_author,
         )
 
         return {
