@@ -151,4 +151,4 @@ def read_item(
         }
 
     else:
-        raise HTTPException(status_code=403, detail="Item not found")
+        raise HTTPException(status_code=403, detail="Metric not found")
