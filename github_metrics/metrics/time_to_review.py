@@ -74,7 +74,7 @@ def filter_reviewed_prs(pr_list):
     return [pr for pr in pr_list if pr["first_review_at"] is not None]
 
 
-def calulate_prs_review_time_statistics(
+def get_time_to_review_data(
     pr_list, include_hotfixes, exclude_authors, filter_authors, exclude_weekends
 ):
     valid_pr_list = filter_valid_prs(
@@ -102,20 +102,40 @@ def calulate_prs_review_time_statistics(
     mean = numpy.mean(review_time_list)
     median = numpy.median(review_time_list)
     percentile = numpy.percentile(review_time_list, 95)
+    return {
+        "mean": mean,
+        "median": median,
+        "percentile_95": percentile,
+        "total_prs": formatted_pr_list,
+        "unreviewed_prs": unreviewed_prs,
+        "prs_over_24h": prs_over_24h,
+    }
+
+
+def calulate_prs_review_time_statistics(
+    pr_list, include_hotfixes, exclude_authors, filter_authors, exclude_weekends
+):
+    data = get_time_to_review_data(
+        pr_list=pr_list,
+        include_hotfixes=include_hotfixes,
+        exclude_authors=exclude_authors,
+        filter_authors=filter_authors,
+        exclude_weekends=exclude_weekends,
+    )
 
     print(
-        f"     \033[1mTime to review\033[0m"
-        f"    ----------------------------------"
-        f"    Total valid PRs: {len(formatted_pr_list)}"
-        f"    Unreviewed PRs: {unreviewed_prs}"
-        f" ({round((unreviewed_prs * 100) / total_prs, 2)}%)"
-        f"    PRs with more than 24h waiting for review: {prs_over_24h}"
-        f" ({round(prs_over_24h * 100 / total_prs, 2)}%)"
-        f"    ----------------------------------"
-        f"    Mean: {format_timedelta_to_text(mean)}"
-        f" ({format_timedelta_to_hours(mean)} hours)"
-        f"    Median: {format_timedelta_to_text(median)}"
-        f" ({format_timedelta_to_hours(median)} hours)"
-        f"    95 percentile: {format_timedelta_to_text(percentile)}"
-        f" ({format_timedelta_to_hours(percentile)} hours)"
+        f"     \033[1mTime to review\033[0m\n"
+        f"    ----------------------------------\n"
+        f"    Total valid PRs: {len(data['total_prs'])}\n"
+        f"    Unreviewed PRs: {data['unreviewed_prs']}"
+        f" ({round((data['unreviewed_prs'] * 100) / len(data['total_prs']), 2)}%)\n"
+        f"    PRs with more than 24h waiting for review: {data['prs_over_24h']}"
+        f" ({round(data['prs_over_24h'] * 100 / len(data['total_prs']), 2)}%)\n"
+        f"    ----------------------------------\n"
+        f"    Mean: {format_timedelta_to_text(data['mean'])}"
+        f" ({format_timedelta_to_hours(data['mean'])} hours)\n"
+        f"    Median: {format_timedelta_to_text(data['median'])}"
+        f" ({format_timedelta_to_hours(data['median'])} hours)\n"
+        f"    95 percentile: {format_timedelta_to_text(data['percentile_95'])}"
+        f" ({format_timedelta_to_hours(data['percentile_95'])} hours)\n"
     )

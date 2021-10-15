@@ -93,6 +93,7 @@ def fetch_prs_between(start_date, end_date):
     current_date = None
     cursor = None
     has_next_page = True
+
     while has_next_page and (not current_date or current_date > start_date):
         response = requests.post(
             "https://api.github.com/graphql",

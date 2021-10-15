@@ -13,7 +13,7 @@ def format_pr_list(pr_list):
     ]
 
 
-def call_pr_size_statistics(pr_list, include_hotfixes, exclude_authors, filter_authors):
+def get_pr_size_data(pr_list, include_hotfixes, exclude_authors, filter_authors):
     valid_pr_list = filter_valid_prs(
         pr_list, include_hotfixes, exclude_authors, filter_authors
     )
@@ -34,15 +34,34 @@ def call_pr_size_statistics(pr_list, include_hotfixes, exclude_authors, filter_a
     rate_median = numpy.median(diff_line_rate)
     rate_percentile = numpy.percentile(diff_line_rate, 95)
 
+    return {
+        "total_prs": formatted_pr_list,
+        "total_mean": total_mean,
+        "total_median": total_median,
+        "total_percentile_95": total_percentile,
+        "rate_mean": rate_mean,
+        "rate_median": rate_median,
+        "rate_percentile_95": rate_percentile,
+    }
+
+
+def call_pr_size_statistics(pr_list, include_hotfixes, exclude_authors, filter_authors):
+    data = get_pr_size_data(
+        pr_list=pr_list,
+        include_hotfixes=include_hotfixes,
+        exclude_authors=exclude_authors,
+        filter_authors=filter_authors,
+    )
+
     print(
         f"     \033[1mPull Requests Size\033[0m\n"
         f"     ----------------------------------\n"
-        f"     Total PRs calculated: {len(formatted_pr_list)}\n"
+        f"     Total PRs calculated: {len(data['formatted_pr_list'])}\n"
         f"     ----------------------------------\n"
-        f"     Total Lines Mean: {round(total_mean, 2)} lines\n"
-        f"     Total Lines Median: {round(total_median, 2)} lines\n"
-        f"     Total Lines 95 percentile: {round(total_percentile, 2)} lines\n\n"
-        f"     Diff Rate Mean: {round(rate_mean, 2)}\n"
-        f"     Diff Rate Median: {round(rate_median, 2)}\n"
-        f"     Diff Rate 95 percentile: {round(rate_percentile, 2)}\n"
+        f"     Total Lines Mean: {round(data['total_mean'], 2)} lines\n"
+        f"     Total Lines Median: {round(data['total_median'], 2)} lines\n"
+        f"     Total Lines 95 percentile: {round(data['total_percentile'], 2)} lines\n\n"
+        f"     Diff Rate Mean: {round(data['rate_mean'], 2)}\n"
+        f"     Diff Rate Median: {round(data['rate_median'], 2)}\n"
+        f"     Diff Rate 95 percentile: {round(data['rate_percentile'], 2)}\n"
     )

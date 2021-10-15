@@ -44,7 +44,7 @@ def format_pr_list(pr_list):
     ]
 
 
-def call_time_to_open_statistics(
+def get_time_to_open_data(
     pr_list, include_hotfixes, exclude_authors, filter_authors, exclude_weekends
 ):
     valid_pr_list = filter_valid_prs(
@@ -66,16 +66,34 @@ def call_time_to_open_statistics(
     mean = numpy.mean(time_to_open)
     median = numpy.median(time_to_open)
     percentile = numpy.percentile(time_to_open, 95)
+    return {
+        "mean": mean,
+        "median": median,
+        "percentile_95": percentile,
+        "total_prs": formatted_pr_list,
+    }
+
+
+def call_time_to_open_statistics(
+    pr_list, include_hotfixes, exclude_authors, filter_authors, exclude_weekends
+):
+    data = get_time_to_open_data(
+        pr_list=pr_list,
+        include_hotfixes=include_hotfixes,
+        exclude_authors=exclude_authors,
+        filter_authors=filter_authors,
+        exclude_weekends=exclude_weekends,
+    )
 
     print(
-        f"     \033[1mTime to open\033[0m"
-        f"    ----------------------------------"
-        f"    Total PRs calculated: {len(formatted_pr_list)}"
-        f"    ----------------------------------"
-        f"    Mean: {format_timedelta_to_text(mean)}"
-        f" ({format_timedelta_to_hours(mean)} hours)"
-        f"    Median: {format_timedelta_to_text(median)}"
-        f" ({format_timedelta_to_hours(median)} hours)"
-        f"    95 percentile: {format_timedelta_to_text(percentile)}"
-        f" ({format_timedelta_to_hours(percentile)} hours)"
+        f"     \033[1mTime to open\033[0m\n"
+        f"    ----------------------------------\n"
+        f"    Total PRs calculated: {len(data['total_prs'])}\n"
+        f"    ----------------------------------\n"
+        f"    Mean: {format_timedelta_to_text(data['mean'])}"
+        f" ({format_timedelta_to_hours(data['mean'])} hours)\n"
+        f"    Median: {format_timedelta_to_text(data['median'])}"
+        f" ({format_timedelta_to_hours(data['median'])} hours)\n"
+        f"    95 percentile: {format_timedelta_to_text(data['percentile_95'])}"
+        f" ({format_timedelta_to_hours(data['percentile_95'])} hours)\n"
     )
