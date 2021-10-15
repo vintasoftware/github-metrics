@@ -72,7 +72,11 @@ def calulate_prs_open_to_merge_time_statistics(
     pr_list, include_hotfixes, exclude_authors, filter_authors, exclude_weekends
 ):
     data = get_open_to_merge_time_data(
-        pr_list, include_hotfixes, exclude_authors, filter_authors, exclude_weekends
+        pr_list=pr_list,
+        include_hotfixes=include_hotfixes,
+        exclude_authors=exclude_authors,
+        filter_authors=filter_authors,
+        exclude_weekends=exclude_weekends,
     )
 
     print(

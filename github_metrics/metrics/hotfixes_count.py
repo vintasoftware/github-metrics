@@ -9,7 +9,9 @@ def get_hotfixes_data(pr_list, exclude_authors, filter_authors):
 
 
 def count_hotfixes(pr_list, exclude_authors, filter_authors):
-    data = get_hotfixes_data(pr_list, exclude_authors, filter_authors)
+    data = get_hotfixes_data(
+        pr_list=pr_list, exclude_authors=exclude_authors, filter_authors=filter_authors
+    )
     print(
         f"     \033[1mHotfixes Count\033[0m\n"
         f"     ----------------------------------\n"

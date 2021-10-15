@@ -55,7 +55,10 @@ def call_merge_rate_statistics(
     pr_list, include_hotfixes, exclude_authors, filter_authors
 ):
     data = get_merge_rate_data(
-        pr_list, include_hotfixes, exclude_authors, filter_authors
+        pr_list=pr_list,
+        include_hotfixes=include_hotfixes,
+        exclude_authors=exclude_authors,
+        filter_authors=filter_authors,
     )
 
     print(

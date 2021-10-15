@@ -46,7 +46,12 @@ def get_pr_size_data(pr_list, include_hotfixes, exclude_authors, filter_authors)
 
 
 def call_pr_size_statistics(pr_list, include_hotfixes, exclude_authors, filter_authors):
-    data = get_pr_size_data(pr_list, include_hotfixes, exclude_authors, filter_authors)
+    data = get_pr_size_data(
+        pr_list=pr_list,
+        include_hotfixes=include_hotfixes,
+        exclude_authors=exclude_authors,
+        filter_authors=filter_authors,
+    )
 
     print(
         f"     \033[1mPull Requests Size\033[0m\n"
