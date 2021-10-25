@@ -5,6 +5,7 @@ import click
 
 from github_metrics.metrics.all import call_all_metrics
 from github_metrics.metrics.hotfixes_count import count_hotfixes
+from github_metrics.metrics.prs_count import count_prs
 from github_metrics.metrics.merge_rate import call_merge_rate_statistics
 from github_metrics.metrics.open_to_merge import (
     calulate_prs_open_to_merge_time_statistics,
@@ -55,6 +56,7 @@ def setup_enviroment_variables():
     mr - Merge Rate
     pr_size - Pull Request Size
     hotfixes_count - Hotfixes Count
+    prs_count - Pull Requests Count
     \b""",
 )
 @click.option(
@@ -169,8 +171,8 @@ def cli(
         call_pr_size_statistics(
             pr_list, include_hotfixes, exclude_user_list, filter_user_list
         )
-    elif metric == "hotfixes_count":
-        count_hotfixes(pr_list, exclude_user_list, filter_user_list)
+    elif metric == "prs_count":
+        count_prs(pr_list, include_hotfixes, exclude_user_list, filter_user_list)
     else:
         call_all_metrics(
             pr_list,
