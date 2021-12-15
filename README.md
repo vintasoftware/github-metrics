@@ -73,8 +73,11 @@ The number of hotfixes in the period.
 2. Setup settings variable by running `github_metrics --setup`. You'll be asked to give following information:
 
 `Github username`: Your github account login
-`Enter a github token`: An access token generated with your github account.  More information accessible through [this guide](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). The lib requires full repo access for it to work
+
+`Enter a github token`: An access token generated with your github account. More information accessible through [this guide](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). The lib requires full repo access for it to work
+
 `Name of the organization`: The name of the organization where the repository is located
+
 `Repository name`: The repository name of the project of your choice
 
 **NOTE:** Running the `--setup` flag will overwrite the existing enviroment settings.
