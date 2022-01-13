@@ -1,4 +1,5 @@
 import numpy
+import arrow
 
 from github_metrics.common import extract_datetime_or_none, get_author_login
 from github_metrics.helpers import (
@@ -24,7 +25,11 @@ def format_pr_list(pr_list):
             "title": pr["title"],
             "author": get_author_login(pr),
             "created_at": extract_datetime_or_none(pr.get("createdAt")),
-            "merged_at": extract_datetime_or_none(pr.get("mergedAt"))
+            "merged_at": extract_datetime_or_none(pr.get("mergedAt")),
+            "duration_in_hours": get_time_without_weekend(
+                arrow.get(pr["createdAt"]),
+                arrow.get(pr["mergedAt"])
+            ).total_seconds() / 3600
             if pr.get("mergedAt")
             else None,
         }
@@ -63,6 +68,9 @@ def get_open_to_merge_time_data(
         "mean": mean,
         "median": median,
         "percentile_95": percentile,
+        "mean_duration_in_hours": mean.total_seconds() / 3600,
+        "median_duration_in_hours": median.total_seconds() / 3600,
+        "percentile_95_duration_in_hours": percentile.total_seconds() / 3600,
         "total_prs": merged_pr_list,
         "merged_pr_rate": merged_pr_rate,
     }

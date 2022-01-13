@@ -70,6 +70,9 @@ def get_time_to_open_data(
         "mean": mean,
         "median": median,
         "percentile_95": percentile,
+        "mean_duration_in_hours": mean.total_seconds() / 3600,
+        "median_duration_in_hours": median.total_seconds() / 3600,
+        "percentile_95_duration_in_hours": percentile.total_seconds() / 3600,
         "total_prs": formatted_pr_list,
     }
 
