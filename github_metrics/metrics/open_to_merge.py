@@ -26,11 +26,13 @@ def format_pr_list(pr_list):
             "author": get_author_login(pr),
             "created_at": extract_datetime_or_none(pr.get("createdAt")),
             "merged_at": extract_datetime_or_none(pr.get("mergedAt")),
-            "duration_in_hours": get_time_without_weekend(
-                arrow.get(pr["createdAt"]),
-                arrow.get(pr["mergedAt"])
-            ).total_seconds() / 3600
-            if pr.get("mergedAt")
+            "duration_in_hours": format_timedelta_to_hours(
+                get_time_without_weekend(
+                    arrow.get(pr["createdAt"]),
+                    arrow.get(pr["mergedAt"])
+                )
+            )
+            if extract_datetime_or_none(pr.get("createdAt")) and extract_datetime_or_none(pr.get("mergedAt"))
             else None,
         }
         for pr in pr_list

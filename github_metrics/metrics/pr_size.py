@@ -1,3 +1,4 @@
+from github_metrics.common import get_author_login
 import numpy
 
 from github_metrics.helpers import filter_valid_prs
@@ -8,6 +9,7 @@ def format_pr_list(pr_list):
         {
             "additions": pr["additions"],
             "deletions": pr["deletions"],
+            "author": get_author_login(pr),
         }
         for pr in pr_list
     ]

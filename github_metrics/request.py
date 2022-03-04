@@ -44,12 +44,44 @@ def format_request_for_github(cursor=None):
                     headRefName
                     additions
                     deletions
+                    comments(first: 100) {{
+                        nodes {{
+                            author {{
+                                login
+                            }}
+                            body
+                        }}
+                        edges {{
+                            node {{
+                                author {{
+                                    login
+                                }}
+                                body
+                            }}
+                        }}
+                    }}
                     reviews(first: 10) {{
                         nodes {{
                             createdAt
                             state
+                            comments(first: 100) {{
+                                nodes {{
+                                    body
+                                    author {{
+                                        login
+                                    }}
+                                }}
+                            }}
                             author {{
                                 login
+                            }}
+                        }}
+                        edges {{
+                            node {{
+                                body
+                                author {{
+                                    login
+                                }}
                             }}
                         }}
                     }}
@@ -81,7 +113,6 @@ def format_request_for_github(cursor=None):
 def pr_was_created_between(pr, start_date, end_date):
     open_date = extract_datetime_or_none(pr.get("createdAt"))
     return open_date >= start_date and open_date <= end_date
-
 
 def fetch_prs_between(start_date, end_date):
     if not all([GITHUB_LOGIN, GITHUB_TOKEN, ORG_NAME, REPOSITORY_NAME]):

@@ -22,6 +22,19 @@ def get_reviews_from_pr(pr):
 
     return reviews
 
+def get_comments_from_pr(pr):
+    comments_root = pr.get("comments")
+
+    if not comments_root:
+        return []
+
+    comments = comments_root.get("nodes", [])
+    if not comments:
+        return []
+
+    return comments
+
+
 
 def get_first_review(pr):
     pr_author_login = get_author_login(pr)
@@ -35,6 +48,56 @@ def get_first_review(pr):
         return
 
     return different_author_reviews[0]
+
+def get_comments_from_pr_review(pr):
+    reviews_root = pr.get("reviews")
+    if not reviews_root:
+        return []
+
+    nodes = reviews_root.get("nodes", [])
+    edges = reviews_root.get("edges", [])
+    edge_comments = [
+        {"login": get_author_login(e["node"]), "comment": e["node"]["body"]}
+        for e in edges if e.get("node", {}).get("body")
+    ]
+    node_comments = [
+        {"login": get_author_login(c), "comment": c["body"]}
+        for n in nodes if n.get("comments", {"nodes": []})
+        for c in n.get("comments").get("nodes") if c.get("body")
+    ]
+    return node_comments + edge_comments
+
+
+def get_reviewers_and_comments(pr):
+    pr_author_login = get_author_login(pr)
+    reviews = get_reviews_from_pr(pr)
+    comments = get_comments_from_pr(pr)
+    comments_from_pr_review = get_comments_from_pr_review(pr)
+
+    different_author_reviews = [
+        r for r in reviews if pr_author_login != get_author_login(r)
+    ]
+    different_author_comments = [
+        r for r in comments if pr_author_login != get_author_login(r)
+    ]
+
+    revisions_from_different_author = different_author_comments + different_author_reviews
+    if not revisions_from_different_author:
+        return
+
+    reviewers = [get_author_login(revision) for revision in revisions_from_different_author]
+    reviewers = list(set(reviewers))
+
+    reviewers_and_comments = []
+    for reviewer in reviewers:
+        reviewer_comments = [c.get("body") for c in comments if get_author_login(c) == reviewer]
+        reviewer_pr_reviews = [i["comment"] for i in comments_from_pr_review if i["login"] == reviewer]
+
+        reviewers_and_comments.append({
+            "login": reviewer,
+            "comments": reviewer_pr_reviews + reviewer_comments,
+        })
+    return reviewers_and_comments
 
 
 def hours_without_review(pr):
@@ -63,6 +126,14 @@ def format_pr_list(pr_list):
             )
             if get_first_review(pr)
             else None,
+            "reviewers": get_reviewers_and_comments(pr),
+            "duration_in_hours": format_timedelta_to_hours(
+                get_time_without_weekend(
+                    arrow.get(pr["createdAt"]),
+                    arrow.get(get_first_review(pr).get("createdAt"))
+                )
+            ) if get_first_review(pr) and pr["createdAt"]
+            else None
         }
         for pr in pr_list
     ]
