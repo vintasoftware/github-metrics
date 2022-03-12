@@ -25,7 +25,7 @@ def format_request_for_github(cursor=None):
     organization(login: "{ORG_NAME}") {{
         repository(name: "{REPOSITORY_NAME}") {{
             pullRequests(
-                first: 200,
+                first: 100,
                 orderBy: {{
                     field: CREATED_AT,
                     direction: DESC
