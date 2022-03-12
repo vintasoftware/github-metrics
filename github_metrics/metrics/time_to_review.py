@@ -29,9 +29,6 @@ def get_comments_from_pr(pr):
         return []
 
     comments = comments_root.get("nodes", [])
-    if not comments:
-        return []
-
     return comments
 
 
@@ -62,31 +59,28 @@ def get_comments_from_pr_review(pr):
     ]
     node_comments = [
         {"login": get_author_login(c), "comment": c["body"]}
-        for n in nodes if n.get("comments", {"nodes": []})
-        for c in n.get("comments").get("nodes") if c.get("body")
+        for n in nodes
+        for c in n.get("comments", {"nodes": []}).get("nodes") if c.get("body")
     ]
     return node_comments + edge_comments
 
 
 def get_reviewers_and_comments(pr):
     pr_author_login = get_author_login(pr)
-    reviews = get_reviews_from_pr(pr)
     comments = get_comments_from_pr(pr)
     comments_from_pr_review = get_comments_from_pr_review(pr)
 
     different_author_reviews = [
-        r for r in reviews if pr_author_login != get_author_login(r)
+        r["login"] for r in comments_from_pr_review if pr_author_login != r["login"]
     ]
     different_author_comments = [
-        r for r in comments if pr_author_login != get_author_login(r)
+        get_author_login(r) for r in comments if pr_author_login != get_author_login(r)
     ]
 
-    revisions_from_different_author = different_author_comments + different_author_reviews
-    if not revisions_from_different_author:
-        return
-
-    reviewers = [get_author_login(revision) for revision in revisions_from_different_author]
+    reviewers = different_author_comments + different_author_reviews
     reviewers = list(set(reviewers))
+    if not reviewers:
+        return
 
     reviewers_and_comments = []
     for reviewer in reviewers:

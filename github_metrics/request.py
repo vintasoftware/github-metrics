@@ -25,7 +25,7 @@ def format_request_for_github(cursor=None):
     organization(login: "{ORG_NAME}") {{
         repository(name: "{REPOSITORY_NAME}") {{
             pullRequests(
-                first: 100,
+                first: 200,
                 orderBy: {{
                     field: CREATED_AT,
                     direction: DESC
@@ -113,6 +113,7 @@ def format_request_for_github(cursor=None):
 def pr_was_created_between(pr, start_date, end_date):
     open_date = extract_datetime_or_none(pr.get("createdAt"))
     return open_date >= start_date and open_date <= end_date
+
 
 def fetch_prs_between(start_date, end_date):
     if not all([GITHUB_LOGIN, GITHUB_TOKEN, ORG_NAME, REPOSITORY_NAME]):
