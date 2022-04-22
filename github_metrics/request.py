@@ -1,3 +1,4 @@
+import random
 from time import sleep
 
 import requests
@@ -44,12 +45,44 @@ def format_request_for_github(cursor=None):
                     headRefName
                     additions
                     deletions
+                    comments(first: 100) {{
+                        nodes {{
+                            author {{
+                                login
+                            }}
+                            body
+                        }}
+                        edges {{
+                            node {{
+                                author {{
+                                    login
+                                }}
+                                body
+                            }}
+                        }}
+                    }}
                     reviews(first: 10) {{
                         nodes {{
                             createdAt
                             state
+                            comments(first: 100) {{
+                                nodes {{
+                                    body
+                                    author {{
+                                        login
+                                    }}
+                                }}
+                            }}
                             author {{
                                 login
+                            }}
+                        }}
+                        edges {{
+                            node {{
+                                body
+                                author {{
+                                    login
+                                }}
                             }}
                         }}
                     }}
@@ -93,8 +126,10 @@ def fetch_prs_between(start_date, end_date):
     current_date = None
     cursor = None
     has_next_page = True
-
+    timeout = [25, 15, 5, 30]
     while has_next_page and (not current_date or current_date > start_date):
+        i = random.choice(timeout)
+        sleep(i)
         response = requests.post(
             "https://api.github.com/graphql",
             auth=HTTPBasicAuth(GITHUB_LOGIN, GITHUB_TOKEN),

@@ -6,7 +6,8 @@ def format_pr_list(pr_list):
     return [
         {
             "author": get_author_login(pr),
-            "merged_at": extract_datetime_or_none(pr.get("mergedAt"))
+            "merged_at": extract_datetime_or_none(pr.get("mergedAt")),
+            "created_at": extract_datetime_or_none(pr.get("createdAt"))
             if pr.get("mergedAt")
             else None,
         }

@@ -80,11 +80,13 @@ def get_time_to_merge_data(
     mean = numpy.mean(time_to_merge_list)
     median = numpy.median(time_to_merge_list)
     percentile = numpy.percentile(time_to_merge_list, 95)
-
     return {
         "mean": mean,
         "median": median,
         "percentile_95": percentile,
+        "mean_duration_in_hours": mean.total_seconds() / 3600,
+        "median_duration_in_hours": median.total_seconds() / 3600,
+        "percentile_95_duration_in_hours": percentile.total_seconds() / 3600,
         "merged_prs": merged_prs,
     }
 
