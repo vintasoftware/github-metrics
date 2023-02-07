@@ -56,12 +56,12 @@ def call_pr_size_statistics(pr_list, include_hotfixes, exclude_authors, filter_a
     print(
         f"     \033[1mPull Requests Size\033[0m\n"
         f"     ----------------------------------\n"
-        f"     Total PRs calculated: {len(data['formatted_pr_list'])}\n"
+        f"     Total PRs calculated: {len(data['total_prs'])}\n"
         f"     ----------------------------------\n"
         f"     Total Lines Mean: {round(data['total_mean'], 2)} lines\n"
         f"     Total Lines Median: {round(data['total_median'], 2)} lines\n"
-        f"     Total Lines 95 percentile: {round(data['total_percentile'], 2)} lines\n\n"
+        f"     Total Lines 95 percentile: {round(data['total_percentile_95'], 2)} lines\n\n"
         f"     Diff Rate Mean: {round(data['rate_mean'], 2)}\n"
         f"     Diff Rate Median: {round(data['rate_median'], 2)}\n"
-        f"     Diff Rate 95 percentile: {round(data['rate_percentile'], 2)}\n"
+        f"     Diff Rate 95 percentile: {round(data['rate_percentile_95'], 2)}\n"
     )

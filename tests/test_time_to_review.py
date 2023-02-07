@@ -19,15 +19,15 @@ class TestPRsMTR(unittest.TestCase):
     def test_filter_prs_with_more_than_18h_before_review(self):
         pr_list = [
             {
-                "created_at": datetime.datetime(2021, 3, 25, 14, 28, 52),
+                "ready_at": datetime.datetime(2021, 3, 25, 14, 28, 52),
                 "first_review_at": None,
             },
             {
-                "created_at": datetime.datetime(2021, 3, 2, 10, 10),
+                "ready_at": datetime.datetime(2021, 3, 2, 10, 10),
                 "first_review_at": datetime.datetime(2021, 3, 4, 15, 12),
             },
             {
-                "created_at": datetime.datetime(2021, 3, 2, 10, 10),
+                "ready_at": datetime.datetime(2021, 3, 2, 10, 10),
                 "first_review_at": datetime.datetime(2021, 3, 2, 11, 3),
             },
         ]

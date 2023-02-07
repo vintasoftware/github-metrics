@@ -1,6 +1,6 @@
 import numpy
 
-from github_metrics.common import extract_datetime_or_none, get_author_login
+from github_metrics.common import extract_datetime_or_none, get_author_login, get_ready_datetime_from_pr
 from github_metrics.helpers import (
     filter_valid_prs,
     format_timedelta_to_hours,
@@ -31,7 +31,7 @@ def format_pr_list(pr_list):
         {
             "title": pr["title"],
             "author": get_author_login(pr),
-            "created_at": extract_datetime_or_none(pr.get("createdAt")),
+            "ready_at": get_ready_datetime_from_pr(pr),
             "merged_at": extract_datetime_or_none(pr.get("mergedAt"))
             if pr.get("mergedAt")
             else None,
@@ -58,9 +58,9 @@ def get_time_to_open_data(
     time_to_open = []
     for pr in formatted_pr_list:
         first_commit_time = pr["commits"][0]["commited_at"]
-        timedelta = pr["created_at"] - first_commit_time
+        timedelta = pr["ready_at"] - first_commit_time
         if exclude_weekends:
-            timedelta = get_time_without_weekend(first_commit_time, pr["created_at"])
+            timedelta = get_time_without_weekend(first_commit_time, pr["ready_at"])
         time_to_open.append(timedelta)
 
     mean = numpy.mean(time_to_open)
