@@ -46,4 +46,4 @@ def _get_raw_ready_datetime_from_pr(pr):
     return timeline_node.get("createdAt", pr["createdAt"])
 
 def get_ready_datetime_from_pr(pr):
-    return arrow.get(_get_raw_ready_datetime_from_pr(pr)).datetime
+    return extract_datetime_or_none(_get_raw_ready_datetime_from_pr(pr))

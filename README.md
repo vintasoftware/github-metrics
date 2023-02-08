@@ -63,7 +63,7 @@ Returns statistics related to the time between opening and merging a pull reques
 It measures the total number of merged pull requests to the total number of developers active in this time period (number of merged PRS / dev). A value closer to 1 indicates that each developer is merging a PR. a higher number indicates more merged PRs than devs, and vice versa.
 
 - <b id="pr-size">Pull Request Size (pr_size):</b>
-It generates metrics related to the number of lines added and deleted in a PR. The output will generate metrics related to the sum of different lines in a pr (lines added + lines deleted), and the addition rate metric (lines adds / lines deleted). In the latter case, a higher the rate number means more lines are being added than deleted.
+It generates metrics related to the number of lines added and deleted in a PR. The output will generate metrics related to the sum of different lines in a pr (lines added + lines deleted), and the addition rate metric (lines added / lines deleted). In the latter case, a higher the rate number means more lines are being added than deleted.
 
 - <b id="hotfixes-count">Hotfixes Count (hotfixes_count):</b>
 The number of hotfixes in the period.
