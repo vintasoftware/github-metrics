@@ -1,7 +1,7 @@
 import arrow
 import numpy
 
-from github_metrics.common import extract_datetime_or_none, get_author_login
+from github_metrics.common import extract_datetime_or_none, get_author_login, get_ready_datetime_from_pr
 from github_metrics.helpers import (
     filter_valid_prs,
     format_timedelta_to_hours,
@@ -38,7 +38,7 @@ def get_first_review(pr):
 
 
 def hours_without_review(pr):
-    open_date = extract_datetime_or_none(pr["created_at"])
+    open_date = extract_datetime_or_none(pr["ready_at"])
 
     if pr["first_review_at"] is None:
         time_without_review = arrow.now() - open_date
@@ -57,7 +57,7 @@ def format_pr_list(pr_list):
         {
             "title": pr["title"],
             "author": get_author_login(pr),
-            "created_at": extract_datetime_or_none(pr.get("createdAt")),
+            "ready_at": get_ready_datetime_from_pr(pr),
             "first_review_at": extract_datetime_or_none(
                 get_first_review(pr).get("createdAt")
             )
@@ -88,10 +88,10 @@ def get_time_to_review_data(
 
     review_time_list = []
     for pr in reviewed_prs:
-        review_time = pr["first_review_at"] - pr["created_at"]
+        review_time = pr["first_review_at"] - pr["ready_at"]
         if exclude_weekends:
             review_time = get_time_without_weekend(
-                pr["created_at"], pr["first_review_at"]
+                pr["ready_at"], pr["first_review_at"]
             )
         review_time_list.append(review_time)
 

@@ -1,6 +1,6 @@
 import numpy
 
-from github_metrics.common import extract_datetime_or_none, get_author_login
+from github_metrics.common import extract_datetime_or_none, get_author_login, get_ready_datetime_from_pr
 from github_metrics.helpers import (
     filter_valid_prs,
     format_timedelta_to_hours,
@@ -23,7 +23,7 @@ def format_pr_list(pr_list):
         {
             "title": pr["title"],
             "author": get_author_login(pr),
-            "created_at": extract_datetime_or_none(pr.get("createdAt")),
+            "ready_at": get_ready_datetime_from_pr(pr),
             "merged_at": extract_datetime_or_none(pr.get("mergedAt"))
             if pr.get("mergedAt")
             else None,
@@ -46,10 +46,10 @@ def get_open_to_merge_time_data(
     review_time_list = []
 
     for pr in merged_pr_list:
-        open_pr_duration = pr["merged_at"] - pr["created_at"]
+        open_pr_duration = pr["merged_at"] - pr["ready_at"]
         if exclude_weekends:
             open_pr_duration = get_time_without_weekend(
-                pr["created_at"], pr["merged_at"]
+                pr["ready_at"], pr["merged_at"]
             )
         review_time_list.append(open_pr_duration)
 

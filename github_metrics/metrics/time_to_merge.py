@@ -1,6 +1,6 @@
 import numpy
 
-from github_metrics.common import extract_datetime_or_none, get_author_login
+from github_metrics.common import extract_datetime_or_none, get_author_login, get_ready_datetime_from_pr
 from github_metrics.helpers import (
     filter_valid_prs,
     format_timedelta_to_hours,
@@ -31,7 +31,7 @@ def format_pr_list(pr_list):
         {
             "title": pr["title"],
             "author": get_author_login(pr),
-            "created_at": extract_datetime_or_none(pr.get("createdAt")),
+            "ready_at": get_ready_datetime_from_pr(pr),
             "merged_at": extract_datetime_or_none(pr.get("mergedAt"))
             if pr.get("mergedAt")
             else None,

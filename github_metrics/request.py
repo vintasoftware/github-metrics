@@ -69,6 +69,16 @@ def format_request_for_github(cursor=None):
                             }}
                         }}
                     }}
+                    timelineItems(last: 1, itemTypes: READY_FOR_REVIEW_EVENT) {{
+                        edges {{
+                            node {{
+                                ... on ReadyForReviewEvent {{
+                                    id
+                                    createdAt
+                                }}
+                            }}
+                        }}
+                    }}
                 }}
             }}
         }}
